@@ -1,8 +1,6 @@
 import sys
 import regex as re
 import string
-from nltk.tokenize import word_tokenize
-from nltk import download
 
 if len(sys.argv) != 3:
     print("Usage: python3 morfemdividilo.py INPUTFILE OUTPUTFILE")
