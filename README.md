@@ -2,7 +2,7 @@
 
 Skripto por prilabori tekstojn en Esperanto, por dividi morfemojn en vortoj.
 
-Script for processing Esperanto texts, for divide morphemes in words.
+Script for processing Esperanto texts, to divide morphemes in words.
 
 &nbsp;
 
