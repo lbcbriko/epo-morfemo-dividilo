@@ -23,13 +23,13 @@ Mi planis dividi morfemojn per jenaj paŝoj. Tiuj paŝoj fariĝos unu post la al
 
 ## Finitivo (✓programita)
 
-3\. Por morfemo "as", "is", "os", "us", "u", kiu estas antaŭ 包括其后为空格、换行符和标点符号的情况spaco, linioŝanĝilo aŭ interpunkcio, tajpi dividilon "\_" antaŭ ĝin;
+3\. Por morfemo "as", "is", "os", "us", "u", kiuj estas antaŭ spaco, linioŝanĝilo aŭ interpunkcio, tajpi dividilon "\_" antaŭ ĝin;
 
 ## Vortospeco & infinitivo (✓programita)
 
-4\. ~~对位于词尾的"a", "o"，包括其后为空格、换行符、标点符号、"\_j"或"\_n"的情况，在它之前插入分隔符；~~  
-~~5\. 对位于词尾的"e"，包括其后为空格、换行符、标点符号、"\_n"的情况，在它之前插入分隔符，但对以"ie"结尾的除外；~~  
-~~6\. 对位于词尾的"i"，包括其后为空格、换行符、标点符号和"\_o"的情况，在它之前插入分隔符；~~
+4\. Por morfemo "a", "o", kiuj estas antaŭ spaco, linioŝanĝilo, interpunkcio, "\_j" aŭ "\_n", tajpi dividilon "\_" antaŭ ĝin;
+5\. Por morfemo "e", kiuj estas antaŭ spaco, linioŝanĝilo, interpunkcio aŭ "\_n", tajpi dividilon "\_" antaŭ ĝin, sed krom "ie";
+6\. Por morfemo "i", kiuj estas antaŭ spaco, linioŝanĝilo, interpunkcio aŭ "\_o", tajpi dividilon "\_" antaŭ ĝin
 
 ## Genro (✓programita)
 
