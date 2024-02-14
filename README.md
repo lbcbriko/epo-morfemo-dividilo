@@ -33,7 +33,7 @@ Mi planis dividi morfemojn per jenaj paŝoj. Tiuj paŝoj fariĝos unu post la al
 
 ## Genro (✓programita)
 
-~~7\. 对位于词尾且其后为"\_o"的"in"，在它之前插入分隔符；如instruistin_o应处理为instruist_in_o, FILIN_O应处理为FIL_IN_O~~
+7\. Por "in" antaŭ "\_o", tajpi dividilon "\_" antaŭ ĝin; ekz. de "instruistino" al "instruist_in_o", de "FILIN_O" al "FIL_IN_O";
 
 ## Participo (✓programita)
 
