@@ -70,3 +70,17 @@ Uskleco ne influas la serĉo, sed ne ŝanĝiĝos post antaŭigado
 
 ## Malprilabori misdividitajn morfemojn,  
 ekz. "l_um_o", "hor_loĝ_o", "eks_kurs_o" (farota)
+
+## Alia aldona pensado (farota, aŭ nur diskutota)
+
+Mi pensis pri tio, ke la mala prilaboro poas okazi ne nur en la fina paŝo, sed multfoje sekvas aliajn misageblajn paŝojn, kaj la funkcio povas uziĝi plurfoje.
+
+Ni povas prilabori liston de morfemoj (la dosiero "vortaro" kaj aldonaj estonte), tiel ni havos anstataŭ-interresponda listo, por eble pli rapida komputo.
+
+Ni eble (mi ne certas) povas ordigi radikojn per longeco, tiel post kontroli mallongajn radikojn (ekz. "hor" k "loĝ"), ĝi ankoraŭ povas daŭre kontroli la longajn (ekz. "horloĝ")
+
+Ni povas unue nur prilabori tiujn longajn morfemojn, kaj por tro mallongaj (ekz. "-i-"), kontroli poste per pli bonaj rimedoj aŭ manlaboro. 
+
+Ni povas uzi eksterajn vortarojn kiel dosierojn anstataŭ rekte enkodigi la aron en programon, tiel oni povas pli facile novigi la vortaron laŭ bezono.
+
+La programo eble povas fariĝi biblioteko, por pli komplikaj logikoj, aŭ nur uzi parton de la programo. (ekz nur kontroli sekson en iu teksto)
