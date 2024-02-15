@@ -19,6 +19,7 @@ Mi planis dividi morfemojn per jenaj paŝoj. Tiuj paŝoj fariĝos unu post la al
 ## Nomvorto (✓programita)
 
 1\. Por litero "n" antaŭ spaco, linioŝanĝilo aŭ interpunkcio, tajpi dividilon "\_" antaŭ ĝin;  
+
 2\. Por litero "j" antaŭ spaco, linioŝanĝilo, interpunkcio aŭ "\_n", tajpi dividilon "\_" antaŭ ĝin;
 
 ## Finitivo (✓programita)
@@ -28,7 +29,9 @@ Mi planis dividi morfemojn per jenaj paŝoj. Tiuj paŝoj fariĝos unu post la al
 ## Vortospeco & infinitivo (✓programita)
 
 4\. Por morfemo "a", "o", kiuj estas antaŭ spaco, linioŝanĝilo, interpunkcio, "\_j" aŭ "\_n", tajpi dividilon "\_" antaŭ ĝin;
+
 5\. Por morfemo "e", kiuj estas antaŭ spaco, linioŝanĝilo, interpunkcio aŭ "\_n", tajpi dividilon "\_" antaŭ ĝin, sed krom "ie";
+
 6\. Por morfemo "i", kiuj estas antaŭ spaco, linioŝanĝilo, interpunkcio aŭ "\_o", tajpi dividilon "\_" antaŭ ĝin
 
 ## Genro (✓programita)
