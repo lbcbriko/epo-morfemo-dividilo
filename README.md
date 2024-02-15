@@ -19,7 +19,7 @@ Mi planis dividi morfemojn per jenaj paŝoj. Tiuj paŝoj fariĝos unu post la al
 ## Nomvorto (✓programita)
 
 1\. Por litero "n" antaŭ spaco, linioŝanĝilo aŭ interpunkcio, tajpi dividilon "\_" antaŭ ĝin;  
-2\. Por litero "n" antaŭ spaco, linioŝanĝilo, interpunkcio aŭ "\_n", tajpi dividilon "\_" antaŭ ĝin;
+2\. Por litero "j" antaŭ spaco, linioŝanĝilo, interpunkcio aŭ "\_n", tajpi dividilon "\_" antaŭ ĝin;
 
 ## Finitivo (✓programita)
 
