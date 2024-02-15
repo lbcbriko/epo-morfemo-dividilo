@@ -15,7 +15,6 @@ asperul
 aspik
 aspirator
 aspr
-as
 astart
 asteni
 asteri
