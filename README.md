@@ -18,21 +18,21 @@ Mi planis dividi morfemojn per jenaj paŝoj. Tiuj paŝoj fariĝos unu post la al
 
 ## Nomvorto (✓programita)
 
-1\. Por litero "n" antaŭ spaco, linioŝanĝilo aŭ interpunkcio, tajpi dividilon "\_" antaŭ ĝin;  
+1\. Por litero "n" antaŭ spaco, novlinio aŭ interpunkcio, tajpi dividilon "\_" antaŭ ĝin;  
 
-2\. Por litero "j" antaŭ spaco, linioŝanĝilo, interpunkcio aŭ "\_n", tajpi dividilon "\_" antaŭ ĝin;
+2\. Por litero "j" antaŭ spaco, novlinio, interpunkcio aŭ "\_n", tajpi dividilon "\_" antaŭ ĝin;
 
 ## Finitivo (✓programita)
 
-3\. Por morfemo "as", "is", "os", "us", "u", kiuj estas antaŭ spaco, linioŝanĝilo aŭ interpunkcio, tajpi dividilon "\_" antaŭ ĝin;
+3\. Por morfemo "as", "is", "os", "us", "u", kiuj estas antaŭ spaco, novlinio aŭ interpunkcio, tajpi dividilon "\_" antaŭ ĝin;
 
 ## Vortospeco & infinitivo (✓programita)
 
-4\. Por morfemo "a", "o", kiuj estas antaŭ spaco, linioŝanĝilo, interpunkcio, "\_j" aŭ "\_n", tajpi dividilon "\_" antaŭ ĝin;
+4\. Por morfemo "a", "o", kiuj estas antaŭ spaco, novlinio, interpunkcio, "\_j" aŭ "\_n", tajpi dividilon "\_" antaŭ ĝin;
 
-5\. Por morfemo "e", kiuj estas antaŭ spaco, linioŝanĝilo, interpunkcio aŭ "\_n", tajpi dividilon "\_" antaŭ ĝin, sed krom "ie";
+5\. Por morfemo "e", kiuj estas antaŭ spaco, novlinio, interpunkcio aŭ "\_n", tajpi dividilon "\_" antaŭ ĝin, sed krom "ie";
 
-6\. Por morfemo "i", kiuj estas antaŭ spaco, linioŝanĝilo, interpunkcio aŭ "\_o", tajpi dividilon "\_" antaŭ ĝin
+6\. Por morfemo "i", kiuj estas antaŭ spaco, novlinio, interpunkcio aŭ "\_o", tajpi dividilon "\_" antaŭ ĝin
 
 ## Genro (✓programita)
 
@@ -40,26 +40,27 @@ Mi planis dividi morfemojn per jenaj paŝoj. Tiuj paŝoj fariĝos unu post la al
 
 ## Participo (✓programita)
 
-Por morfemoj"ant", "ont", "int", "at", "ot", "it", kiuj antaŭ "\_a", "\_e", "\_o", entajpi dividilon antaŭ ilin, sed krom "Esperant_" ĉar ĉi tiu vorto kun nomuskla skribo estas propra nomo.
+8\. Por morfemoj"ant", "ont", "int", "at", "ot", "it", kiuj antaŭ "\_a", "\_e", "\_o", entajpi dividilon antaŭ ilin, sed krom "Esperant_" ĉar ĉi tiu vorto kun nomuskla skribo estas propra nomo.
 Ekz. Esperant_o aŭ Esperant_a estu ignorota, lernant_o prilaboriĝos al "lern_ant_o"，RINIT_O_J al RIN_IT_O_J.
 
 ## Aliaj sufiksoj (✓programita)
 
-~~9\. 从后向前判断每个单词是否有位于词尾，其后紧跟分隔符"\_"且属于集合{aĉ,ad,aĵ,an,ar,ĉj,ebl,ec,eg,ej,em,end,er,estr,et,id,ig,iĝ,il,ind,ing,ism,ist,nj,obl,on,op,uj,ul,um}的元素，如果有则在其之前添加分隔符，并继续向前重复上述判断，直到不存在属于集合的元素。前文所述的紧跟在字符串后的分隔符应为一个单词中第一个，或逆序最后一个分隔符。~~  
-~~例如对于malsanulejan_in_o，应从位于malsanulejan_in这部分的字符串开始判断，输出结果应为malsan_ul_ej_an_in_o~~
+9\. De fino antaŭen serĉi elementojn, kiuj antaŭ la dividilo "\_" kaj en la aro {aĉ,ad,aĵ,an,ar,ĉj,ebl,ec,eg,ej,em,end,er,estr,et,id,ig,iĝ,il,ind,ing,ism,ist,nj,obl,on,op,uj,ul,um}, aldoni dividilon antaŭ ĝi, kaj daŭre refari tion, ĝis ne ekzistus elemento el la aro. 
+Ekz. por la vorto "malsanulejan_in_o", ek kontroli de signoĉeno parto "malsanulejan", la eltajpota rezulto estu "lsan_ul_ej_an_in_o".
 
-~~10\. 删除一侧为空格、标点符号或换行符的分隔符，删除位于文档开头和末尾的分隔符，将连续的分隔符替换为仅一个分隔符~~
+10\. forigu dividilojn, kiuj havas spacon, interjunkcion aŭ novlinio ĉe iu ajn flanko de si, forigi dividilojn, kiuj estas ĉe la komenco aŭ fino de la tuta teksto (dosiero)， anstataŭi 
+seninterrompajn plurajn dividilojn per nur unu.
 
-## Prefiksoj (✓programita, sed bezonas rapidigi)
+## Prefiksoj (✓programita, sed ni devas rapidigi tion)
 
-~~11\. 从前往后判断每个单词是否有位于开始，之前不存在任何字母的元素属于集合{bo,ĉef,dis,ek,eks,ge,mal,mis,pra,re,afro,anti,arĥi,aŭdio,aŭto,bio,des,eko,eŭro,hiper,infra,ko,kver,makro,meta,mikro,mini,mono,pre,proto,pseŭdo,retro,san,semi,stif,tele,termo,ultra,video}。如果有则在其之后添加分隔符"\_"，并继续向前重复上述判断，直到不存在属于集合的元素。~~  
-~~例如对于geboav_o_j，输出结果应为ge_bo_av_o_j；对于Maldis_ig_i，输出结果应为Mal_dis_ig_i。该步骤逻辑与此前匹配集合中指定后缀的逻辑相似，但方向相反，且可能涉及到单词首字母大写、全部小写和全部大写情况，要求对它们均忽视大小写进行识别，但插入分隔符后的单词大小写应保持不变~~
+11\. de komenco finen kontroli ĉiujn vortojn, pri ĉu ekzistus elementoj ĉe la komenco, havas neniliterojn pli antaŭeajn, estas de la aro {bo,ĉef,dis,ek,eks,ge,mal,mis,pra,re,afro,anti,arĥi,aŭdio,aŭto,bio,des,eko,eŭro,hiper,infra,ko,kver,makro,meta,mikro,mini,mono,pre,proto,pseŭdo,retro,san,semi,stif,tele,termo,ultra,video}. Se tio ekzistas, aldoni la dividilon "\_" post tion, kaj reagadi per antaŭa logiko, ĝis kiam ne ekzistas elemento de la aro.
+Ekz. por "geboav_o_j", eltajpota rezulto estu "ge_bo_av_o_j"; por "Maldis_ig_i", eltajpota rezulto estu "Mal_dis_ig_i". Logiko de ĉi tiu paŝo estas simila al antaŭa paŝo pri sufikso, sed la direkto estas inversa, kaj povus prilabori eblecojn kun majuskloj ĉe la unua, tuta aŭ nenia lokoj. la serĉado devas ignori la usklecon, sed ne ŝanĝos la usklon post aldoni dividilojn.
 
 ## Radikoj (farota)
 
-~~12\. 读取工作目录下的字典文件"radiko.txt"，对此前9、10两步插入的最后一个分隔符中间的部分，识别是否是以任意数量、任意顺序组合的radiko.txt中的字符串，并在其间插入分隔符；如果一个单词并未进行9、10步处理，依然检查它是否是radiko.txt中字符串的组合，并对其任意两个属于radiko.txt的字符串之间插入分隔符；对第11步，必须在两部分字符串均属于radiko.txt时才插入分隔符，否则不做处理；~~  
-~~（该字典较大，且被处理的文本规模也较大。如果有可能进行优化或需要调用新的第三方库，请向我提出建议。）~~  
-~~即判断是否有任意数量任意顺序的仅属于radiko.txt的字符串组合为新的字符串且仅位于空格、分隔符或连词符之间；被组合的元素之间不应有任何字母或符号；处理时将连词符视为字母；~~
+12\. Legi la vortaran dosieron "radiko.txt" en la laborloko, ~~对此前9、10两步插入的最后一个分隔符中间的部分，识别是否是以任意数量、任意顺序组合的radiko.txt中的字符串，并在其间插入分隔符；如果一个单词并未进行9、10步处理，依然检查它是否是radiko.txt中字符串的组合，并对其任意两个属于radiko.txt的字符串之间插入分隔符；对第11步，必须在两部分字符串均属于radiko.txt时才插入分隔符，否则不做处理；~~  
+(La vortaro estas granda, kaj prilaborota teksto estas ankaŭ granda, do se tio povas pli boniĝi per iu biblioteko, bv proponi al mi, dankon!) :)
+Tio estas kontroli ĉu (nur) ekzistas iom da elementoj de radiko.txt per iuj vicordoj kuniĝis nova signoĉeno kaj nur estas inter spacoj, dividiloj aŭ streketoj; ne povas esti ĉia ajn literon aŭ signon inter 2 elementoj; dum la prilaborado, streketo estu rigardata kiel litero.
 
 ## Malprilabori vortetojn (farota)
 
@@ -72,7 +73,8 @@ Ekz. Esperant_o aŭ Esperant_a estu ignorota, lernant_o prilaboriĝos al "lern_a
 Uskleco ne influas la serĉo, sed ne ŝanĝiĝos post antaŭigado
 
 ## Malprilabori misdividitajn morfemojn,  
-ekz. "l_um_o", "hor_loĝ_o", "eks_kurs_o" (farota)
+Ekz. "l_um_o", "hor_loĝ_o", "eks_kurs_o" (farota)
+Tiu ĉi paŝo povus dismetiĝi inter multaj paŝoj por kontraŭi misagojn.
 
 ## Alia aldona pensado (farota, aŭ nur diskutota)
 
