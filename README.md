@@ -40,8 +40,8 @@ Mi planis dividi morfemojn per jenaj paŝoj. Tiuj paŝoj fariĝos unu post la al
 
 ## Participo (✓programita)
 
-~~8\. 对位于词尾的"ant", "ont", "int", "at", "ot", "it"，包括其后紧跟"\_a", "\_e", "\_o"的情况，在它之前插入分隔符，但对于首字母大写的"Esperant_"则不做任何处理；~~  
-~~例如Esperant_o或Esperanta应被忽视，lernant_o应处理为lern_ant_o，RINIT_O_J应处理为RIN_IT_O_J~~
+Por morfemoj"ant", "ont", "int", "at", "ot", "it", kiuj antaŭ "\_a", "\_e", "\_o", entajpi dividilon antaŭ ilin, sed krom "Esperant_" ĉar ĉi tiu vorto kun nomuskla skribo estas propra nomo.
+Ekz. Esperant_o aŭ Esperant_a estu ignorota, lernant_o prilaboriĝos al "lern_ant_o"，RINIT_O_J al RIN_IT_O_J.
 
 ## Aliaj sufiksoj (✓programita)
 
