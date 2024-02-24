@@ -58,8 +58,10 @@ Ekz. por "geboav_o_j", eltajpota rezulto estu "ge_bo_av_o_j"; por "Maldis_ig_i",
 
 ## Radikoj (farota)
 
-12\. Legi la vortaran dosieron "radiko.txt" en la laborloko, ~~对此前9、10两步插入的最后一个分隔符中间的部分，识别是否是以任意数量、任意顺序组合的radiko.txt中的字符串，并在其间插入分隔符；如果一个单词并未进行9、10步处理，依然检查它是否是radiko.txt中字符串的组合，并对其任意两个属于radiko.txt的字符串之间插入分隔符；对第11步，必须在两部分字符串均属于radiko.txt时才插入分隔符，否则不做处理；~~  
+12\. Legi la vortaran dosieron "radiko.txt" en la laborloko, por la parto inter enmetiaj dividiloj de la 9-a k la 10-a paŝo, kontroli ĉu tio estas signoĉeno kunmetita de elementoj nur de radiko.txt per iu ajn nombro aŭ vicordo, enmeti dividilon inter ilin; se iu vorto ne estis prilaborita per antaŭaj paŝoj (sen dividilo), ankoraŭ prilabori kiel la meza parto; por la 11-a paŝo, nur enmeti dividilon en tia situacio, kiam 2 partoj da signoĉeno estas ambaŭ de radiko.txt, se male, fari nenion.
+
 (La vortaro estas granda, kaj prilaborota teksto estas ankaŭ granda, do se tio povas pli boniĝi per iu biblioteko, bv proponi al mi, dankon!) :)
+
 Tio estas kontroli ĉu (nur) ekzistas iom da elementoj de radiko.txt per iuj vicordoj kuniĝis nova signoĉeno kaj nur estas inter spacoj, dividiloj aŭ streketoj; ne povas esti ĉia ajn literon aŭ signon inter 2 elementoj; dum la prilaborado, streketo estu rigardata kiel litero.
 
 ## Malprilabori vortetojn (farota)
@@ -74,6 +76,7 @@ Uskleco ne influas la serĉo, sed ne ŝanĝiĝos post antaŭigado
 
 ## Malprilabori misdividitajn morfemojn,  
 Ekz. "l_um_o", "hor_loĝ_o", "eks_kurs_o" (farota)
+
 Tiu ĉi paŝo povus dismetiĝi inter multaj paŝoj por kontraŭi misagojn.
 
 ## Alia aldona pensado (farota, aŭ nur diskutota)
