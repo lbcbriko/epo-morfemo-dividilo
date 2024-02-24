@@ -41,11 +41,13 @@ Mi planis dividi morfemojn per jenaj paŝoj. Tiuj paŝoj fariĝos unu post la al
 ## Participo (✓programita)
 
 8\. Por morfemoj"ant", "ont", "int", "at", "ot", "it", kiuj antaŭ "\_a", "\_e", "\_o", entajpi dividilon antaŭ ilin, sed krom "Esperant_" ĉar ĉi tiu vorto kun nomuskla skribo estas propra nomo.
+
 Ekz. Esperant_o aŭ Esperant_a estu ignorota, lernant_o prilaboriĝos al "lern_ant_o"，RINIT_O_J al RIN_IT_O_J.
 
 ## Aliaj sufiksoj (✓programita)
 
 9\. De fino antaŭen serĉi elementojn, kiuj antaŭ la dividilo "\_" kaj en la aro {aĉ,ad,aĵ,an,ar,ĉj,ebl,ec,eg,ej,em,end,er,estr,et,id,ig,iĝ,il,ind,ing,ism,ist,nj,obl,on,op,uj,ul,um}, aldoni dividilon antaŭ ĝi, kaj daŭre refari tion, ĝis ne ekzistus elemento el la aro. 
+
 Ekz. por la vorto "malsanulejan_in_o", ek kontroli de signoĉeno parto "malsanulejan", la eltajpota rezulto estu "lsan_ul_ej_an_in_o".
 
 10\. forigu dividilojn, kiuj havas spacon, interjunkcion aŭ novlinio ĉe iu ajn flanko de si, forigi dividilojn, kiuj estas ĉe la komenco aŭ fino de la tuta teksto (dosiero)， anstataŭi 
@@ -54,6 +56,7 @@ seninterrompajn plurajn dividilojn per nur unu.
 ## Prefiksoj (✓programita, sed ni devas rapidigi tion)
 
 11\. de komenco finen kontroli ĉiujn vortojn, pri ĉu ekzistus elementoj ĉe la komenco, havas neniliterojn pli antaŭeajn, estas de la aro {bo,ĉef,dis,ek,eks,ge,mal,mis,pra,re,afro,anti,arĥi,aŭdio,aŭto,bio,des,eko,eŭro,hiper,infra,ko,kver,makro,meta,mikro,mini,mono,pre,proto,pseŭdo,retro,san,semi,stif,tele,termo,ultra,video}. Se tio ekzistas, aldoni la dividilon "\_" post tion, kaj reagadi per antaŭa logiko, ĝis kiam ne ekzistas elemento de la aro.
+
 Ekz. por "geboav_o_j", eltajpota rezulto estu "ge_bo_av_o_j"; por "Maldis_ig_i", eltajpota rezulto estu "Mal_dis_ig_i". Logiko de ĉi tiu paŝo estas simila al antaŭa paŝo pri sufikso, sed la direkto estas inversa, kaj povus prilabori eblecojn kun majuskloj ĉe la unua, tuta aŭ nenia lokoj. la serĉado devas ignori la usklecon, sed ne ŝanĝos la usklon post aldoni dividilojn.
 
 ## Radikoj (farota)
