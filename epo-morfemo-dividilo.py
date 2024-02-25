@@ -254,20 +254,24 @@ def purigi_dividilon(input_file, output_file):
 purigi_dividilon('cache9', 'cache10')
 
 
-
 def insert_separators_for_consecutive_prefixes(input_text, prefixes):
-    sorted_prefixes = sorted(prefixes, key=len, reverse=True)
+    # 将前缀按长度降序排序并转义，以确保长前缀优先匹配
+    prefix_pattern = '|'.join(sorted(map(re.escape, prefixes), key=len, reverse=True))
+    # 构建匹配前缀的正则表达式，忽略大小写
+    regex_pattern = re.compile(r'(?<=^|[\s_])(' + prefix_pattern + r')(?=\w)', re.IGNORECASE)
+
+    # 将输入文本转换为列表，每个字符为一个元素
+    chars = list(input_text)
+    # 遍历字符列表并寻找匹配的前缀
     i = 0
-    while i < len(input_text):
-        for prefix in sorted_prefixes:
-            prefix_len = len(prefix)
-            if input_text[i:].lower().startswith(prefix.lower()) and (i + prefix_len == len(input_text) or input_text[i + prefix_len] not in ['_'] + list(prefixes)):
-                input_text = input_text[:i + prefix_len] + "_" + input_text[i + prefix_len:]
-                i += prefix_len
-                break
-        else:
-            i += 1
-    return input_text
+    while i < len(chars):
+        match = regex_pattern.match(''.join(chars[i:]))
+        if match:
+            end = i + match.end()
+            chars.insert(end, '_')  # 在匹配的前缀后插入分隔符
+            i = end  # 更新索引以跳过刚刚插入的分隔符
+        i += 1  # 移动到下一个字符
+    return ''.join(chars)  # 将字符列表合并回字符串
 
 def process_prefixes(input_file, output_file):
     prefixes = {
