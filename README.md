@@ -73,7 +73,7 @@ Tio estas kontroli ĉu (nur) ekzistas iom da elementoj de radiko.txt per iuj vic
 
 ## Dividi tabelvortojn (farota)
 
-14\. anstataŭ {ĉia, ia, kia, nenia, tia, ĉial, ial, kial, nenial, tial, ĉiam, iam, kiam, neniam, tiam, ĉie, ie, kie, nenie, tie, ĉiel, iel, kiel, neniel, tiel, ĉies, ies, kies, nenies, ties, ĉio, io, kio, nenio, tio, ĉiom, iom, kiom, neniom, tiom, ĉiu, iu, kiu, neniu, tiu} per {ĉi_a, i_a, ki_a, neni_a, ti_a, ĉi_al, i_al, ki_al, neni_al, ti_al, ĉi_am, i_am, ki_am, neni_am, ti_am, ĉi_e, i_e, ki_e, neni_e, ti_e, ĉi_el, i_el, ki_el, neni_el, ti_el, ĉi_es, i_es, ki_es, neni_es, ti_es, ĉi_o, i_o, ki_o, neni_o, ti_o, ĉi_om, i_om, ki_om, neni_om, ti_om, ĉi_u, i_u, ki_u, neni_u, ti_u} 
+14\. anstataŭ [ĉia, ia, kia, nenia, tia, ĉial, ial, kial, nenial, tial, ĉiam, iam, kiam, neniam, tiam, ĉie, ie, kie, nenie, tie, ĉiel, iel, kiel, neniel, tiel, ĉies, ies, kies, nenies, ties, ĉio, io, kio, nenio, tio, ĉiom, iom, kiom, neniom, tiom, ĉiu, iu, kiu, neniu, tiu] per [ĉi_a, i_a, ki_a, neni_a, ti_a, ĉi_al, i_al, ki_al, neni_al, ti_al, ĉi_am, i_am, ki_am, neni_am, ti_am, ĉi_e, i_e, ki_e, neni_e, ti_e, ĉi_el, i_el, ki_el, neni_el, ti_el, ĉi_es, i_es, ki_es, neni_es, ti_es, ĉi_o, i_o, ki_o, neni_o, ti_o, ĉi_om, i_om, ki_om, neni_om, ti_om, ĉi_u, i_u, ki_u, neni_u, ti_u]
 
 Uskleco ne influas la serĉo, sed ne ŝanĝiĝos post antaŭigado
 
