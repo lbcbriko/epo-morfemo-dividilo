@@ -130,63 +130,63 @@ def vortspeco(input_file, output_file):
 vortspeco('cache3', 'cache6')
 
 
-def genro(input_file, output_file):
-    # 读取输入文件
-    with open(input_file, 'r', encoding='utf-8') as file:
-        text = file.read()
+# def genro(input_file, output_file):
+#     # 读取输入文件
+#     with open(input_file, 'r', encoding='utf-8') as file:
+#         text = file.read()
 
-    # 定义正则表达式来匹配"in"后紧接"_o"的情况
-    pattern = r'in(?=(_o|_e|_a))'
+#     # 定义正则表达式来匹配"in"后紧接"_o"的情况
+#     pattern = r'in(?=(_o|_e|_a))'
 
-    # 定义回调函数以根据匹配的"in"是大写还是小写来决定插入的分隔符
-    def replace_func(match):
-        matched_in = match.group(0)
-        # 判断匹配到的"in"是否为大写
-        if matched_in == 'IN':
-            return f'_IN'
-        else:
-            return f'_in'
+#     # 定义回调函数以根据匹配的"in"是大写还是小写来决定插入的分隔符
+#     def replace_func(match):
+#         matched_in = match.group(0)
+#         # 判断匹配到的"in"是否为大写
+#         if matched_in == 'IN':
+#             return f'_IN'
+#         else:
+#             return f'_in'
     
-    # 执行替换
-    modified_text = re.sub(pattern, replace_func, text, flags=re.IGNORECASE)
+#     # 执行替换
+#     modified_text = re.sub(pattern, replace_func, text, flags=re.IGNORECASE)
 
-    # 写入输出文件
-    with open(output_file, 'w', encoding='utf-8') as file:
-        file.write(modified_text)
+#     # 写入输出文件
+#     with open(output_file, 'w', encoding='utf-8') as file:
+#         file.write(modified_text)
 
-    print("Step 7 completed: Separator inserted before 'in' followed by '_o', preserving case for specific cases like In_o, IN_O, in_o.")
+#     print("Step 7 completed: Separator inserted before 'in' followed by '_o', preserving case for specific cases like In_o, IN_O, in_o.")
 
-genro('cache6', 'cache7')
+# genro('cache6', 'cache7')
 
 
-def participo(input_file, output_file):
-    # 读取输入文件
-    with open(input_file, 'r', encoding='utf-8') as file:
-        text = file.read()
+# def participo(input_file, output_file):
+#     # 读取输入文件
+#     with open(input_file, 'r', encoding='utf-8') as file:
+#         text = file.read()
 
-    # 定义正则表达式，匹配指定的后缀，并考虑其后可能紧跟的特定字符串
-    # 使用负向前视断言确保不处理以"Esperant"开头的词
-    pattern = r'(?<!Esperant)(ant|ont|int|at|ot|it)(?=(_a|_e|_o|$))'
+#     # 定义正则表达式，匹配指定的后缀，并考虑其后可能紧跟的特定字符串
+#     # 使用负向前视断言确保不处理以"Esperant"开头的词
+#     pattern = r'(?<!Esperant)(ant|ont|int|at|ot|it)(?=(_a|_e|_o|$))'
 
-    # 定义回调函数以根据匹配的后缀是大写还是小写来决定插入的分隔符
-    def replace_func(match):
-        matched_suffix = match.group(0)
-        # 判断匹配到的后缀是否全部为大写
-        if matched_suffix.isupper():
-            return f'_{matched_suffix}'
-        else:
-            return f'_{matched_suffix.lower()}'
+#     # 定义回调函数以根据匹配的后缀是大写还是小写来决定插入的分隔符
+#     def replace_func(match):
+#         matched_suffix = match.group(0)
+#         # 判断匹配到的后缀是否全部为大写
+#         if matched_suffix.isupper():
+#             return f'_{matched_suffix}'
+#         else:
+#             return f'_{matched_suffix.lower()}'
     
-    # 执行替换
-    modified_text = re.sub(pattern, replace_func, text, flags=re.IGNORECASE)
+#     # 执行替换
+#     modified_text = re.sub(pattern, replace_func, text, flags=re.IGNORECASE)
 
-    # 写入输出文件
-    with open(output_file, 'w', encoding='utf-8') as file:
-        file.write(modified_text)
+#     # 写入输出文件
+#     with open(output_file, 'w', encoding='utf-8') as file:
+#         file.write(modified_text)
 
-    print("Step 8 completed: Separator inserted before specified suffixes, preserving case and excluding 'Esperant_'.")
+#     print("Step 8 completed: Separator inserted before specified suffixes, preserving case and excluding 'Esperant_'.")
 
-participo('cache7', 'cache8')
+# participo('cache7', 'cache8')
 
 
 def aliaj_sufiksoj_prilabori(input_text, suffixes):
@@ -205,26 +205,24 @@ def aliaj_sufiksoj_prilabori(input_text, suffixes):
     return modified_text
 
 def aliaj_sufiksoj_cxefa(input_file, output_file):
-    # 定义需要插入分隔符的后缀集合
+    # Defini sufiksaron
     suffixes = {
         'aĉ', 'ad', 'aĵ', 'an', 'ar', 'ĉj', 'ebl', 'ec', 'eg', 'ej', 'em', 'end', 'er', 'estr', 'et',
-        'id', 'ig', 'iĝ', 'il', 'ind', 'ing', 'ism', 'ist', 'nj', 'obl', 'on', 'op', 'uj', 'ul', 'um'
+        'id', 'ig', 'iĝ', 'il', 'in', 'ind', 'ing', 'ism', 'ist', 'nj', 'obl', 'on', 'op', 'uj', 'ul', 
+        'um', 'ant', 'at', 'ont', 'ot', 'int', 'it'
     }
 
-    # 读取输入文件内容
     with open(input_file, 'r', encoding='utf-8') as file:
         input_text = file.read()
 
-    # 处理文本
     modified_text = aliaj_sufiksoj_prilabori(input_text, suffixes)
 
-    # 写入输出文件
     with open(output_file, 'w', encoding='utf-8') as file:
         file.write(modified_text)
 
     print("Processing completed. The output file has been updated.")
 
-aliaj_sufiksoj_cxefa('cache8', 'cache9')
+aliaj_sufiksoj_cxefa('cache6', 'cache9')
 
 
 
