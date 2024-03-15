@@ -1,14 +1,20 @@
 # epo-morfemo-dividilo
 
+(ATENTU: NE UZEBLA NUN!)
+
 Skripto por prilabori tekstojn en Esperanto, por dividi morfemojn en vortoj.
 
 Script for processing Esperanto texts, to divide morphemes in words.
 
 &nbsp;
 
-Mi sincere petas samideanoj kunklopodi por NLP-iloj en Esperanto.
-
 Pardonon, la dokumento kaj notoj ne pretiĝis. Mi tuj faros tion.
+
+&nbsp;
+
+## Kial mi faras tion?
+
+Kvankam jam ekzistas programoj pri Esperanto, mi ankoraŭ volas ion pli facile kaj aŭtomate uzeblan. La celo de tiu ĉi programo finfine estos tia ilo, kiu povas krei korpuson de skanitaj bildoj. Jam ekzistas sufiĉe aŭtomata programo por rekoni optikajn signojn kaj kontroli literumadon, kaj aliaj datumpurigiloj. Post finprogrami morfemodividilon, pli da funkcio por konstrui korpuson aŭtomate estos farota.
 
 &nbsp;
 
