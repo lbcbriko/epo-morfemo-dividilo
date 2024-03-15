@@ -129,65 +129,57 @@ def vortspeco(input_file, output_file):
 # 调用
 vortspeco('cache3', 'cache6')
 
+"""
+Tiu ĉi parto estas funkcio por prilabori sufikson "-in-" k participoj individue. 
+Tamen la vicordo ne ĉiam estas ĉe la fino, ekz. "Ŝi estas filineto  de Maria". 
+Pro tio, ĉiuj sufiksoj estas kunmetitaj en nur 1 funkcio nun.
 
-# def genro(input_file, output_file):
-#     # 读取输入文件
-#     with open(input_file, 'r', encoding='utf-8') as file:
-#         text = file.read()
+def genro(input_file, output_file):
+    with open(input_file, 'r', encoding='utf-8') as file:
+        text = file.read()
 
-#     # 定义正则表达式来匹配"in"后紧接"_o"的情况
-#     pattern = r'in(?=(_o|_e|_a))'
+    pattern = r'in(?=(_o|_e|_a))'
 
-#     # 定义回调函数以根据匹配的"in"是大写还是小写来决定插入的分隔符
-#     def replace_func(match):
-#         matched_in = match.group(0)
-#         # 判断匹配到的"in"是否为大写
-#         if matched_in == 'IN':
-#             return f'_IN'
-#         else:
-#             return f'_in'
+    def replace_func(match):
+        matched_in = match.group(0)
+        if matched_in == 'IN':
+            return f'_IN'
+        else:
+            return f'_in'
     
-#     # 执行替换
-#     modified_text = re.sub(pattern, replace_func, text, flags=re.IGNORECASE)
+    modified_text = re.sub(pattern, replace_func, text, flags=re.IGNORECASE)
 
-#     # 写入输出文件
-#     with open(output_file, 'w', encoding='utf-8') as file:
-#         file.write(modified_text)
+    with open(output_file, 'w', encoding='utf-8') as file:
+        file.write(modified_text)
 
-#     print("Step 7 completed: Separator inserted before 'in' followed by '_o', preserving case for specific cases like In_o, IN_O, in_o.")
+    print("Step 7 completed: Separator inserted before 'in' followed by '_o', preserving case for specific cases like In_o, IN_O, in_o.")
 
-# genro('cache6', 'cache7')
+genro('cache6', 'cache7')
 
 
-# def participo(input_file, output_file):
-#     # 读取输入文件
-#     with open(input_file, 'r', encoding='utf-8') as file:
-#         text = file.read()
+def participo(input_file, output_file):
+    with open(input_file, 'r', encoding='utf-8') as file:
+        text = file.read()
 
-#     # 定义正则表达式，匹配指定的后缀，并考虑其后可能紧跟的特定字符串
-#     # 使用负向前视断言确保不处理以"Esperant"开头的词
-#     pattern = r'(?<!Esperant)(ant|ont|int|at|ot|it)(?=(_a|_e|_o|$))'
+    pattern = r'(?<!Esperant)(ant|ont|int|at|ot|it)(?=(_a|_e|_o|$))'
 
-#     # 定义回调函数以根据匹配的后缀是大写还是小写来决定插入的分隔符
-#     def replace_func(match):
-#         matched_suffix = match.group(0)
-#         # 判断匹配到的后缀是否全部为大写
-#         if matched_suffix.isupper():
-#             return f'_{matched_suffix}'
-#         else:
-#             return f'_{matched_suffix.lower()}'
+    def replace_func(match):
+        matched_suffix = match.group(0)
+        if matched_suffix.isupper():
+            return f'_{matched_suffix}'
+        else:
+            return f'_{matched_suffix.lower()}'
     
-#     # 执行替换
-#     modified_text = re.sub(pattern, replace_func, text, flags=re.IGNORECASE)
+    modified_text = re.sub(pattern, replace_func, text, flags=re.IGNORECASE)
 
-#     # 写入输出文件
-#     with open(output_file, 'w', encoding='utf-8') as file:
-#         file.write(modified_text)
+    with open(output_file, 'w', encoding='utf-8') as file:
+        file.write(modified_text)
 
-#     print("Step 8 completed: Separator inserted before specified suffixes, preserving case and excluding 'Esperant_'.")
+    print("Step 8 completed: Separator inserted before specified suffixes, preserving case and excluding 'Esperant_'.")
 
-# participo('cache7', 'cache8')
+participo('cache7', 'cache8')
 
+"""
 
 def aliaj_sufiksoj_prilabori(input_text, suffixes):
     # 构建正则表达式以匹配所有指定的后缀，这些后缀后面紧跟分隔符"_"
