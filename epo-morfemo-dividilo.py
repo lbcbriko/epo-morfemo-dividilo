@@ -10,74 +10,74 @@ inputname = sys.argv[1]
 outputname = sys.argv[2]
 
 def akuzativo(input_file, output_file):
-    # 读取输入文件
+    # Legi enigitan dosieron
     with open(input_file, 'r', encoding='utf-8') as file:
         text = file.read()
 
-    # 定义正则表达式来匹配特定的'n'，排除'en','jen'以及'n'后紧跟'-'的情况
+    # Difini regulan esprimon来匹配特定的'n'，排除'en','jen'以及'n'后紧跟'-'的情况
     pattern = r'(?<!\b(e|j)e)n(?!\-)(?=\s|[!-\/:-@\[-`{-~])'
 
-    # 定义回调函数以根据匹配的'n'是大写还是小写来决定插入的分隔符后的'n'
+    # Difini 回调函数以根据匹配的'n'是大写还是小写来决定插入的分隔符后的'n'
     def replace_func(match):
         matched_n = match.group(0)
-        # 判断匹配到的'n'是否为大写
+        # Kontroli usklon
         if matched_n.isupper():
             return '_N'
         else:
             return '_n'
     
-    # 执行替换
+    # Anstataŭi
     modified_text = re.sub(pattern, replace_func, text, flags=re.IGNORECASE)
 
-    # 写入输出文件
+    # Skribi eksterigotan dosieron
     with open(output_file, 'w', encoding='utf-8') as file:
         file.write(modified_text)
 
     print("Step 1 completed: Separator inserted before 'n', preserving case and ignoring 'n-' cases.")
 
-# 调用
+# Voki funkcion
 akuzativo(inputname, 'cache1')
 
 
 def pluralo(input_file, output_file):
-    # 读取输入文件
+    # Legi enigitan dosieron
     with open(input_file, 'r', encoding='utf-8') as file:
         text = file.read()
 
-    # 定义正则表达式来匹配特定的'j'，忽略单独出现的'j'和位于连词符"-"后的'j'
+    # Difini regulan esprimon 来匹配特定的'j'，忽略单独出现的'j'和位于连词符"-"后的'j'
     # 匹配其后为空格、换行符、标点符号和"_n"的'j'
     pattern = r'(?<=\p{L})j(?=(\s|[\p{P}]|_n|$))'
 
-    # 定义回调函数以根据匹配的'j'是大写还是小写来决定插入的分隔符后的'j'
+    # Difini 回调函数以根据匹配的'j'是大写还是小写来决定插入的分隔符后的'j'
     def replace_func(match):
         matched_j = match.group(0)
-        # 判断匹配到的'j'是否为大写
+        # Kontroli usklon
         if matched_j.isupper():
             return '_J'
         else:
             return '_j'
     
-    # 执行替换
+    # Anstataŭi
     modified_text = re.sub(pattern, replace_func, text, flags=re.IGNORECASE)
 
-    # 写入输出文件
+    # Skribi eksterigotan dosieron
     with open(output_file, 'w', encoding='utf-8') as file:
         file.write(modified_text)
 
     print("Step 2 completed: Separator inserted before 'j', preserving case and applying specified exclusions.")
 
-# 调用
+# Voki funkcion
 pluralo('cache1', 'cache2')
 
 def finitivo(input_file, output_file):
-    # 读取输入文件
+    # Legi enigitan dosieron
     with open(input_file, 'r', encoding='utf-8') as file:
         text = file.read()
 
-    # 定义正则表达式来匹配指定的后缀前的位置
+    # Difini regulan esprimon 来匹配指定的后缀前的位置
     pattern = r'(?<=\p{L})(as|is|os|us|u)(?=(\s|[\p{P}]|$))'
 
-    # 定义回调函数以根据匹配的后缀是大写还是小写来决定插入的分隔符
+    # Difini 回调函数以根据匹配的后缀是大写还是小写来决定插入的分隔符
     def replace_func(match):
         matched_suffix = match.group(0)
         # 判断匹配到的后缀是否全部为大写（考虑单个字符'U'的情况）
@@ -86,47 +86,47 @@ def finitivo(input_file, output_file):
         else:
             return f'_{matched_suffix.lower()}'
     
-    # 执行替换
+    # Anstataŭi
     modified_text = re.sub(pattern, replace_func, text, flags=re.IGNORECASE)
 
-    # 写入输出文件
+    # Skribi eksterigotan dosieron
     with open(output_file, 'w', encoding='utf-8') as file:
         file.write(modified_text)
 
     print("Step 3 completed: Separator inserted before specified suffixes, preserving case.")
 
-# 调用
+# Voki funkcion
 finitivo('cache2', 'cache3')
 
 
 def vortspeco(input_file, output_file):
-    # 读取输入文件
+    # Legi enigitan dosieron
     with open(input_file, 'r', encoding='utf-8') as file:
         text = file.read()
 
-    # 定义正则表达式来匹配指定的单个字母（"a", "o", "e", "i"）前的位置
+    # Difini regulan esprimon 来匹配指定的单个字母（"a", "o", "e", "i"）前的位置
     # 考虑其后可能紧跟空格、换行符、标点符号或特定的后缀（"_j", "_n", "_o"）
     pattern = r'(?<=\p{L})(a|o|e|i)(?=(\s|[\p{P}]|_j|_n|(_o)?$))'
 
-    # 定义回调函数以根据匹配的字母是大写还是小写来决定插入的分隔符
+    # Difini 回调函数以根据匹配的字母是大写还是小写来决定插入的分隔符
     def replace_func(match):
         matched_letter = match.group(0)
-        # 判断匹配到的字母是否为大写
+        # Kontroli usklon
         if matched_letter.isupper():
             return f'_{matched_letter.upper()}'
         else:
             return f'_{matched_letter.lower()}'
     
-    # 执行替换
+    # Anstataŭi
     modified_text = re.sub(pattern, replace_func, text, flags=re.IGNORECASE)
 
-    # 写入输出文件
+    # Skribi eksterigotan dosieron
     with open(output_file, 'w', encoding='utf-8') as file:
         file.write(modified_text)
 
     print("Steps 4-6 completed: Separator inserted before specified vowels, preserving case.")
 
-# 调用
+# Voki funkcion
 vortspeco('cache3', 'cache6')
 
 """
@@ -182,7 +182,7 @@ participo('cache7', 'cache8')
 """
 
 def aliaj_sufiksoj_prilabori(input_text, suffixes):
-    # 构建正则表达式以匹配所有指定的后缀，这些后缀后面紧跟分隔符"_"
+    # 构建regulan esprimon 以匹配所有指定的后缀，这些后缀后面紧跟分隔符"_"
     suffix_pattern = '|'.join(map(re.escape, suffixes))
     # 使用regex库改进匹配模式
     re_pattern = re.compile(r'(\b\w*?)(' + suffix_pattern + r')(?=_)', re.IGNORECASE)
@@ -191,7 +191,7 @@ def aliaj_sufiksoj_prilabori(input_text, suffixes):
         # 将匹配到的后缀前插入分隔符"_"
         return match.group(1) + '_' + match.group(2)
 
-    # 应用正则表达式并在符合条件的后缀前插入分隔符"_"
+    # 应用regulan esprimon 并在符合条件的后缀前插入分隔符"_"
     modified_text = re_pattern.sub(replace_func, input_text)
 
     return modified_text
@@ -219,23 +219,23 @@ aliaj_sufiksoj_cxefa('cache6', 'cache9')
 
 
 def kontroli_prigotajxon(input_text):
-    # 删除位于文档开头和末尾的分隔符
+    # Forigi dividilojn ĉe komenco aŭ fino de dosiero
     text = re.sub(r'^_+|_+$', '', input_text)
-    # 删除一侧为空格、标点符号或换行符的分隔符
+    # Forigi dividilon kun spaco, interpunkcio aŭ novalinio ĉe iu ajn flanko
     text = re.sub(r'(?<=\s)_+|_+(?=\s)|(?<=[^\w\s])_+|_+(?=[^\w\s])', '', text)
-    # 将连续的分隔符替换为仅一个分隔符
+    # Anstataŭi plurajn dividilojn per nur unu
     text = re.sub(r'_+', '_', text)
     return text
 
 def purigi_dividilon(input_file, output_file):
-    # 读取输入文件
+    # Legi enigitan dosieron
     with open(input_file, 'r', encoding='utf-8') as file:
         input_text = file.read()
 
-    # 清理分隔符
+    # prigi misdividilojn
     cleaned_text = kontroli_prigotajxon(input_text)
 
-    # 写入输出文件
+    # Skribi eksterigotan dosieron
     with open(output_file, 'w', encoding='utf-8') as file:
         file.write(cleaned_text)
 
@@ -247,7 +247,7 @@ purigi_dividilon('cache9', 'cache10')
 def insert_separators_for_consecutive_prefixes(input_text, prefixes):
     # 将前缀按长度降序排序并转义，以确保长前缀优先匹配
     prefix_pattern = '|'.join(sorted(map(re.escape, prefixes), key=len, reverse=True))
-    # 构建匹配前缀的正则表达式，忽略大小写
+    # 构建匹配前缀的regulan esprimon ，忽略大小写
     regex_pattern = re.compile(r'(?<=^|[\s_])(' + prefix_pattern + r')(?=\w)', re.IGNORECASE)
 
     # 将输入文本转换为列表，每个字符为一个元素
@@ -282,5 +282,5 @@ def process_prefixes(input_file, output_file):
     print(f"Processing completed. The output file {output_file} has been updated.")
 
 
-# 调用处理函数
+# Voki funkcion
 process_prefixes('cache10', 'cache11')
