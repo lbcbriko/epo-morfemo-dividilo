@@ -3089,6 +3089,7 @@ linalol
 lind
 linear
 lini
+lingv
 linolen
 lintel
 lipotimi
@@ -3525,7 +3526,7 @@ mutil
 muzik
 muz
 nabot
-nacionalism
+naci
 naftalin
 naft
 nagasak
