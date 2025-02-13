@@ -3,6 +3,8 @@
 ## 13 feb. 2025
 Nun ekzistas iom uzebla programo radiko.py por dividi morfemojn. La antaŭa programo estas tro malrapida, sed oni povas uzi partojn de ĝi por purigi tekstojn paŝe.
 
+---
+
 (ATENTU: NE UZEBLA NUN!)
 
 Skripto por prilabori tekstojn en Esperanto, por dividi morfemojn en vortoj.
