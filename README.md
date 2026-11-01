@@ -1,5 +1,8 @@
 # epo-morfemo-dividilo
 
+## 1 nov. 2026
+La malnova programo `epo-morfemo-dividilo.py` estis forprenata el ĉi tiu branĉo, ĉar ĝi estas tro malrapida por realan uzon. Ĝi restas en la branĉo `arkivo`, kie oni povas konsulti ĝian logikon paŝe.
+
 ## 13 feb. 2025
 Nun ekzistas iom uzebla programo radiko.py por dividi morfemojn. La antaŭa programo estas tro malrapida, sed oni povas uzi partojn de ĝi por purigi tekstojn paŝe.
 
