@@ -1,7 +1,29 @@
 # epo-morfemo-dividilo
 
+## 3 nov. 2026
+`radiko.py` estis reverkita: ĝi nun preferas la plej longan radikon (respektante leksikigintajn kunmetaĵojn kiel `horloĝ` kaj `ekskurs`) kaj eligas plurajn solvojn en unuforma formato. Uzado:
+
+```
+python radiko.py -i input.txt -o output.txt [-n 8] [-v ./vortaro]
+```
+
+Elformato / 输出格式: `vorto[[solvo1|solvo2|...]]`
+
+- Morfemoj estas apartigitaj per `+`, solvoj per `|`, la plej bona unue.
+- **Unu sola solvo estas skribata same: kiel listo kun unu ero.**
+- Neanalizebla vorto fariĝas `vorto[[kontroloto]]`.
+
+| Kazo | Eligo |
+|---|---|
+| unu solvo | `domo[[dom+o]]` |
+| leksikiginta (unua solvo ĝusta) | `horloĝo[[horloĝ+o|hor+loĝ+o]]` |
+| pluraj solvoj | `heroino[[heroin+o|hero+in+o]]` |
+| malsukceso | `kŝŝŝ[[kontroloto]]` |
+
+`heroino` estas vere dusenca: `heroin+o` (la drogo) aŭ `hero+in+o` ("heroa virino"). Tial la programo konservas ambaŭ solvojn anstataŭ elekti unu. Testoj: `python tests/test_radiko.py` (34 kontroloj, ĉiuj pasas).
+
 ## 2 nov. 2026
-La vortaro `radiko.txt` estis refarita el la PIV (Plena Ilustrita Vortaro): de 5523 ĝis 13842 radikoj. Nun la programo povas fendi la kutimajn vortojn (ekz. `dom+o`, `lern+ant+o`, `dom+oj`) anstataŭ resendi `kontroloto`. Detaloj kaj la remainingaj problemoj troviĝas en `PLANO.md`.
+La vortaro `radiko.txt` estis refarita el la PIV (Plena Ilustrita Vortaro): de 5523 ĝis 13842 radikoj. Nun la programo povas fendi la kutimajn vortojn (ekz. `dom+o`, `lern+ant+o`, `dom+oj`) anstataŭ resendi `kontroloto`. Detaloj kaj la restantaj problemoj troviĝas en `PLANO.md`.
 
 ## 1 nov. 2026
 La malnova programo `epo-morfemo-dividilo.py` estis forprenata el ĉi tiu branĉo, ĉar ĝi estas tro malrapida por realan uzon. Ĝi restas en la branĉo `arkivo`, kie oni povas konsulti ĝian logikon paŝe.
@@ -11,7 +33,7 @@ Nun ekzistas iom uzebla programo radiko.py por dividi morfemojn. La antaŭa prog
 
 ---
 
-(ATENTU: NE UZEBLA NUN!)
+(ATENTU: NE UZEBLA NUN!) — *historia noto: ekde novembro 2026 la programo estas uzebla; vidu la kunmetitajn notojn supre / 历史说明：2026 年 11 月起已可用，见上方说明*
 
 Skripto por prilabori tekstojn en Esperanto, por dividi morfemojn en vortoj.
 

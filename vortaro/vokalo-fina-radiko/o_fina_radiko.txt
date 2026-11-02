@@ -1,5 +1,4 @@
 aizo
-akvo
 alo
 anhidro
 antozo
@@ -29,16 +28,13 @@ fosfo
 foto
 frakto
 go
-halo
 hekto
 hematozo
 hemo
 hero
 hetero
 hipo
-ho
 homo
-hothoto
 izo
 jokto
 karo
@@ -51,7 +47,6 @@ krinozo
 kripto
 kvino
 leŭko
-lo
 makro
 megalo
 melo
@@ -67,7 +62,6 @@ nano
 nitro
 nitrozo
 no
-oho
 oligo
 orto
 paleo

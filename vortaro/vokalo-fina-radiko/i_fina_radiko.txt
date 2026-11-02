@@ -316,7 +316,6 @@ diplopi
 dipsomani
 direkci
 direktori
-dirlididi
 disaĝi
 disenteri
 disertaci
@@ -461,7 +460,6 @@ felandri
 feri
 fermi
 ferotipi
-fi
 fibrilaci
 fikari
 fikci

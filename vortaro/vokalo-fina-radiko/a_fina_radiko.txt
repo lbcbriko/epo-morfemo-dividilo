@@ -1,17 +1,14 @@
 aga
 agvara
-aha
 alfa
 alka
 ana
 ara
 arka
 aza
-ba
 baba
 bala
 beta
-blabla
 boa
 da
 dama
@@ -27,16 +24,11 @@ gama
 geta
 giga
 guta
-ha
-haleluja
 halva
 heksa
 hena
 hepta
 hipola
-hola
-hosana
-hura
 ia
 infra
 inka
@@ -60,7 +52,6 @@ koma
 kontra
 kuraca
 la
-lala
 lama
 lima
 maja
@@ -79,7 +70,6 @@ nona
 nova
 okta
 omikra
-pa
 para
 paŝa
 penta
@@ -108,7 +98,6 @@ teta
 tetra
 tra
 trarara
-trateratra
 trema
 ultra
 upsila
@@ -118,4 +107,3 @@ veruga
 vila
 volta
 zeta
-ŭa

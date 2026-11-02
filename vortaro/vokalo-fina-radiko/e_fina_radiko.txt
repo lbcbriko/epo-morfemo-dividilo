@@ -36,7 +36,6 @@ aŭtodafe
 balote
 balte
 barbare
-be
 bide
 blenore
 borne
@@ -64,7 +63,6 @@ draĝe
 dromice
 duble
 dulcine
-ehe
 ele
 elode
 empire
@@ -94,7 +92,6 @@ glace
 glute
 gonore
 gramine
-he
 hebre
 helode
 herakle
@@ -287,7 +284,6 @@ usne
 uve
 vakame
 variete
-ve
 venere
 vide
 vitre

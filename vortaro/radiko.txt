@@ -206,14 +206,12 @@ agrostem
 agrostid
 aguti
 agvara
-aha
 ahims
 aidos
 ailant
 ain
 air
 aizo
-aj
 ajapan
 ajatol
 ajl
@@ -324,7 +322,6 @@ akvifoli
 akvilegi
 akvilon
 akvitan
-akvo
 akĉent
 al
 alabastr
@@ -836,6 +833,7 @@ aprec
 apret
 apretur
 aprez
+april
 aprior
 aprob
 aproksim
@@ -1162,7 +1160,6 @@ aĉeŭle
 aĝ
 aĝi
 aĝiot
-aĥ
 aĥeronti
 aĥil
 aĵ
@@ -1182,6 +1179,7 @@ aŭgit
 aŭgment
 aŭgmentativ
 aŭgur
+aŭgust
 aŭgusten
 aŭk
 aŭkci
@@ -1237,15 +1235,12 @@ aŭtoritat
 aŭtosom
 aŭtotrof
 aŭtun
-ba
 baba
 babil
 babirus
 babord
 babuŝ
-bac
 bacil
-baf
 bagatel
 bagaĝ
 bagn
@@ -1356,7 +1351,6 @@ bariton
 bark
 barkan
 barkarol
-barmicv
 barograf
 barok
 barometr
@@ -1414,7 +1408,6 @@ baŭdruĉ
 baŭhini
 baŭksit
 baŭm
-be
 bearnez
 beat
 beb
@@ -1554,7 +1547,6 @@ bir
 bird
 biret
 birg
-bis
 bisak
 bisekc
 bisin
@@ -1577,7 +1569,6 @@ bizant
 bizar
 bizon
 biĵuteri
-blabla
 blag
 blakbas
 blamanĝ
@@ -1735,7 +1726,6 @@ braĉ
 braĝ
 braĥin
 braĥiur
-brbrr
 bred
 bregm
 brelok
@@ -1846,7 +1836,6 @@ bulk
 bull
 bulten
 bulvard
-bum
 bumerang
 bungar
 bunkr
@@ -2196,6 +2185,7 @@ debit
 debitor
 debut
 dec
+decembr
 decemvir
 deci
 decid
@@ -2532,7 +2522,6 @@ direktori
 direktric
 dirigent
 dirk
-dirlididi
 dis
 disaĝi
 disciplin
@@ -2804,7 +2793,6 @@ eglefin
 ego
 egopodi
 egret
-ehe
 ej
 ejakul
 ejektiv
@@ -3503,6 +3491,7 @@ fe
 feak
 febl
 febr
+februar
 feder
 federaci
 federal
@@ -3575,7 +3564,6 @@ fetor
 fez
 feĉ
 feŭd
-fi
 fiakr
 fianĉ
 fiask
@@ -3844,7 +3832,6 @@ fototerapi
 fototip
 fototropism
 fove
-fr
 frag
 fragari
 fragil
@@ -3940,7 +3927,6 @@ ftal
 ftalein
 ftir
 ftiz
-fu
 fuel
 fug
 fuk
@@ -4499,7 +4485,6 @@ gvat
 gvemul
 gveril
 gvid
-ha
 habitat
 habutaj
 hadean
@@ -4516,13 +4501,11 @@ hal
 haladz
 halanĝ
 halebard
-haleluja
 half
 haliaet
 haliker
 halit
 haliĥer
-halo
 halofit
 halogen
 haloid
@@ -4591,7 +4574,6 @@ haŭser
 haŭsier
 haŭstori
 haŭt
-he
 hebefreni
 hebet
 hebre
@@ -4600,7 +4582,6 @@ hedizar
 hedonism
 hedonist
 hegemoni
-hej
 hejm
 hejt
 hekatomb
@@ -4800,7 +4781,6 @@ higrograf
 higrometr
 higroskop
 hihi
-hik
 hikori
 hiksos
 hil
@@ -4908,18 +4888,14 @@ histrion
 hitit
 hitler
 hiziki
-hm
-ho
 hobal
 hobi
 hoboj
 hodiaŭ
 hodometr
-hoj
 hojl
 hok
 hoke
-hola
 holandez
 hold
 holding
@@ -4962,7 +4938,6 @@ honest
 honor
 honorari
 hont
-hop
 hoplit
 hor
 hord
@@ -4983,19 +4958,15 @@ hortensi
 hortikultur
 hortulan
 hos
-hosana
 hospic
 hospital
 hosti
 hotel
 hotentot
-hothoto
 hoĝkin
-hu
 hub
 huf
 hugenot
-huj
 hul
 huligan
 hulman
@@ -5014,7 +4985,6 @@ hungar
 huntun
 hup
 hur
-hura
 hurd
 huri
 hurl
@@ -5022,9 +4992,7 @@ huron
 hus
 husar
 husum
-huuu
 huz
-huŝ
 ia
 ial
 iam
@@ -5452,6 +5420,7 @@ jang
 janiĉar
 janki
 jansen
+januar
 japan
 jar
 jard
@@ -5592,7 +5561,6 @@ kakt
 kakuminal
 kal
 kala
-kalaazar
 kalabas
 kaladi
 kalam
@@ -7152,7 +7120,6 @@ kvadrirem
 kvadrupleks
 kvak
 kvaker
-kvakvak
 kvalifik
 kvalit
 kvankam
@@ -7196,14 +7163,12 @@ kvintet
 kvintilion
 kvit
 kvitanc
-kvivit
 kviz
 kvocient
 kvodlibet
 kvorum
 kvot
 kŝatri
-kŭaks
 la
 lab
 labar
@@ -7252,7 +7217,6 @@ lakton
 laktuk
 laktukari
 lakun
-lala
 lam
 lama
 lamark
@@ -7603,7 +7567,6 @@ liĉi
 liĝe
 liĥen
 ljam
-lo
 lob
 lobari
 lobeli
@@ -7918,6 +7881,7 @@ maronit
 marot
 marsk
 marsupi
+mart
 martagon
 martel
 martes
@@ -8127,7 +8091,6 @@ metafizik
 metafoni
 metafor
 metakarp
-metakrilataacid
 metal
 metaldehid
 metaleps
@@ -8827,6 +8790,7 @@ nov
 nova
 noval
 novel
+novembr
 novic
 novokain
 noĉ
@@ -8928,10 +8892,8 @@ oft
 oftalm
 ogiv
 ogr
-oho
 oid
 oide
-oj
 ojdemi
 ojdi
 ojstr
@@ -8964,6 +8926,7 @@ okta
 oktaedr
 oktant
 oktav
+oktobr
 oktopod
 okul
 okulari
@@ -9196,7 +9159,6 @@ ozen
 ozokerit
 ozon
 oĉj
-pa
 pac
 pacienc
 pacient
@@ -10385,7 +10347,6 @@ proz
 prozelit
 prozodi
 prozopope
-pru
 prud
 prudent
 prujn
@@ -10439,7 +10400,6 @@ ptialin
 ptilonorink
 ptomain
 ptoz
-pu
 puaz
 pub
 puber
@@ -10456,7 +10416,6 @@ pudor
 pudr
 pudu
 puerper
-puf
 pufin
 pug
 pugn
@@ -10479,7 +10438,6 @@ pulul
 pulv
 pulvor
 pulĉinel
-pum
 pumik
 pumili
 pump
@@ -10600,7 +10558,6 @@ rap
 rapid
 rapir
 raport
-raprap
 rapsod
 rapsodi
 rapunkol
@@ -11009,7 +10966,6 @@ ruf
 rugbe
 rugin
 ruin
-ruk
 rukt
 rukul
 rul
@@ -11314,6 +11270,7 @@ sepi
 sepiolit
 seps
 sept
+septembr
 septet
 septim
 sepult
@@ -11877,7 +11834,6 @@ spur
 spurt
 sput
 sputnik
-sss
 stab
 stabil
 stabl
@@ -12592,7 +12548,6 @@ tiu
 tizan
 tizanopter
 tizanur
-tju
 tjurk
 tlasp
 tmez
@@ -12671,7 +12626,6 @@ totalizator
 totem
 toĥar
 toŭfu
-tpr
 tra
 trab
 trabant
@@ -12737,7 +12691,6 @@ trap
 trapez
 trarara
 trat
-trateratra
 travertin
 travesti
 traĥe
@@ -12889,7 +12842,6 @@ trus
 trusken
 trust
 trut
-ts
 tsetse
 tualet
 tuareg
@@ -12955,10 +12907,8 @@ udmurt
 udon
 ued
 uest
-uf
 ugr
 ugvis
-uhu
 uj
 ujgur
 ukaz
@@ -13155,7 +13105,6 @@ vazelin
 vazistas
 vazopresin
 vaĉ
-ve
 veber
 vedant
 veft
@@ -13566,7 +13515,6 @@ zum
 ĉirkaŭ
 ĉirp
 ĉister
-ĉit
 ĉiu
 ĉiz
 ĉizoj
@@ -13837,6 +13785,4 @@ zum
 ŝveb
 ŝvel
 ŝvit
-ŝŝ
-ŭa
 ŭat

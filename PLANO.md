@@ -28,8 +28,8 @@
 | **P0** | 根词表补全（日常核心词汇） | Phase 1 | ✅ **已完成**（见 §1.5，PIV 导入，5523 → 13842） |
 | **P0** | `sufikso.txt` 补回 `ant/at/ont` | Phase 1 | ✅ **已由 PIV 导入自动解决**（这些词根本身就在 PIV 词根集里） |
 | **P0** | 13 个约束表接入（当前 100% 未使用） | Phase 1 | ⚠️ 词表已重建扩充，**但 `radiko.py` 尚未读取它们**（属代码改动） |
-| **P1** | 切分策略：全解枚举 → 择优 + 约束校验 | Phase 2 | ⬜ 未开始（**现已升为最高优先**，见 §1.6） |
-| **P1** | 缓存有界化、递归剪枝 | Phase 2 | ⬜ 未开始 |
+| **P1** | 切分策略：全解枚举 → 择优 + 约束校验 | Phase 2 | ✅ **已完成**（见 §1.7，34 项测试全绿） |
+| **P1** | 缓存有界化、递归剪枝 | Phase 2 | ✅ **已完成**（20 万条上限 + 深度/枚举双重安全阀） |
 | **P2** | CLI 参数化、连字符按字母处理、大小写策略 | Phase 1 | ⬜ 未开始 |
 | **P2** | 测试、CI、打包为库 | Phase 3 | ⬜ 未开始 |
 
@@ -39,19 +39,51 @@
 
 ### 1.1 `radiko.py` 代码结构
 
-| 行号 | 函数 | 职责 |
-|---|---|---|
-| 8 | `result_cache` | 模块级全局缓存，以"剩余串"为键 |
-| 11-26 | `esperanto_word_split(w, dictionary)` | 记忆化递归，枚举**全部**合法切分 |
-| 29-46 | `esperanto_tokenize(text)` | 单遍字符扫描，按字母/非字母切词 |
-| 48-66 | `esperanto_tokenize_and_analyze_file()` | 逐 token 切分并写出 `词[[切分1|切分2]]` |
-| 69-86 | `__main__` | 加载 5 个词表 → 调 `input.txt` → `output.txt` |
+> 2026-11-03 已重写，实施 D14 的消歧策略。以下为当前结构。
 
-核心切分逻辑（L17-18）：
+| 位置 | 组件 | 职责 |
+|---|---|---|
+| — | `Vortaro` | 词表容器，区分 `radikoj / prefiksoj / sufiksoj / ceteraj / fundamentaj` |
+| — | `Vortaro.sxargi(dir)` | 加载词表（支持 `{...}` 与逐行两种格式） |
+| — | `Dividilo.disigi(w)` | 返回该词的**候选切分元组**，最优在前，带记忆化 |
+| — | `Dividilo._enumeri(w)` | 有界 DFS 枚举，**倒序遍历前缀 = 长匹配优先** |
+| — | `Dividilo._sxlosilo(partoj)` | 排序键：语素数少 → 长度平方和大 → 拼写稳定 |
+| — | `esperanto_tokenize(text)` | 单遍字符扫描，按字母/非字母切词 |
+| — | `formatigi(kandidatoj)` | **统一格式化**：解用 `|`、语素用 `+` |
+| — | `prilabori_tekston / prilabori_dosieron` | 加注并写出 |
+| — | `main()` | CLI：`-i -o -v -n` |
+
+**统一输出格式（单解与多解同构）：**
+
+```
+vorto[[solvo1|solvo2|...]]
+```
+
+- 语素之间 `+`，候选解之间 `|`，**最优解在最前**
+- **只有一个解时列表长度为 1**，格式与多解完全一致
+- 无法切分时为 `vorto[[kontroloto]]`，同样是一个列表项
+
+| 情形 | 输出 |
+|---|---|
+| 单解 | `domo[[dom+o]]` |
+| 词汇化 | `horloĝo[[horloĝ+o]]` |
+| 多解 | `heroino[[heroin+o|hero+in+o]]` |
+| 多解（词缀） | `ekskurso[[ekskurs+o|eks+kurs+o]]` |
+| 失败 | `kŝŝŝ[[kontroloto]]` |
+
+**旧格式对照**：原先为 `词[[解1|解2,解3]]`（语素 `|`、解 `,`），且单解时只有一层结构。新格式把两者统一为"始终是 `|` 分隔的解列表"，消除了"解的分隔符与语素分隔符混淆"的问题。
+
+核心切分循环（原为短匹配优先，现倒序）：
 
 ```python
-for i in range(1, len(w) + 1):
-    if w[:i].lower() in dictionary:
+# 旧：range(1, len(resto) + 1)  -> 切得最碎
+# 新：range(len(resto), 0, -1)  -> 长匹配优先，尊重词汇化
+for i in range(len(resto), 0, -1):
+    peco = resto[:i]
+    if malgrando in NUR_FINAJ and i != len(resto):
+        continue                      # -j / -n 只允许在词末
+    if malgrando in vortaro:
+        ...
 ```
 
 ### 1.2 算法与复杂度
@@ -210,16 +242,23 @@ for i in range(1, len(w) + 1):
 - **影响**：`kvazaux-*` 例外表形同虚设 → `uaz` 会被切成 `u+az`、`ananas` 会被切成 `an+an+as` 之类的误切分；`vokalo-fina-radiko/` 标注的 886 个元音结尾根词无法应用"不得再接元音后缀"规则。
 - ⚠️ **2026-11-02 部分解决**：三个约束目录已由 PIV 重建扩充（886 → **2241**，189 → **441**，88 → **226**），且与 `radiko.txt` 100% 一致。**但 `radiko.py` 仍未读取它们**——需与 Phase 2 的择优打分一起实施（见 §1.6）。
 
-### D4 —【P1，现为最高优先】枚举全部解，无择优、无剪枝
+### D4 —【已解决】枚举全部解，无择优、无剪枝
 
-- **现象**：`esperanto_word_split` 枚举并返回**所有**合法切分（L19-23），无上限、无剪枝。
-- **风险**：`a/e/i/o/u` 被显式加入词典（L86），若遇到全由这些字母构成的词，切分方案数呈指数增长。
-- **影响**：输出形如 `ko|kom+pre+ne` 的候选堆，对下游语料构建无直接价值。
+- **原现象**：`esperanto_word_split` 枚举并返回**所有**合法切分，无上限、无剪枝。
+- **原风险**：`a/e/i/o/u` 被显式加入词典，若遇到全由这些字母构成的词，切分方案数呈指数增长。
+- **原影响**：输出形如 `ko|kom+pre+ne` 的候选堆，对下游语料构建无直接价值。
+- ✅ **2026-11-03 已解决**：
+  - 枚举改为**长匹配优先的 DFS**（倒序遍历前缀），天然先找到词汇化整词。
+  - 排序键 `(语素数, -长度平方和, 拼写)`：少切优先 → 尊重词汇化；长匹配次之。
+  - `--solvoj N`（默认 8）截断候选数；`_MAKSIMUMA_ESPLORO`（4000）与 `_MAKSIMUMA_PROFUNDECO`（64）双重安全阀。
+  - 输出统一为 `vorto[[solvo1|solvo2|...]]`，单解即列表长度 1（见 §1.1）。
+  - 实测：`horloĝ+o`、`ekskurs+o`、`ananas+o`、`lern+ant+o`、`komput+il+o` 均为首解。
 
 ### D5 —【P1】`result_cache` 无上限
 
-- **现象**：L8 的模块级字典只增不减。
-- **影响**：长语料下内存持续增长，与 README 自己担心的"语料很大"直接相关。
+- **原现象**：模块级字典只增不减。
+- **原影响**：长语料下内存持续增长，与 README 自己担心的"语料很大"直接相关。
+- ✅ **2026-11-03 已解决**：缓存移入 `Dividilo` 实例，超过 20 万词条时整体清空（简单但有效，避免长驻进程内存无界增长）。未采用 LRU 是因为 `dict` 清空的实现复杂度与收益比更好。
 
 ### D6 —【P1】`vorteto.txt` / `tabelvorto.txt` 的处理语义与 README 冲突
 
@@ -315,6 +354,62 @@ for i in range(1, len(w) + 1):
 - **对策四：约束表接入后，可进一步降噪。** `vokalo-fina-radiko/` 与 `kvazaux-*` 能排除一部分非法切分（如元音结尾根词后不得再接元音）。
 
 - **影响**：这是 Phase 2 "择优打分"的核心内容，不是可选项。若不处理，词典规模翻倍反而会**让切分质量下降**——因为成分越多，错误组合越多（实测 `komputilo` 的候选解从 6 种涨到更多碎切）。
+
+### 1.7 D14 实施结果（2026-11-03）
+
+已落实到 `radiko.py`，34 项测试全绿（`python tests/test_radiko.py`）。排序键最终为六元组：
+
+```python
+(
+    0 if len(partoj) == 1 else 1,          # 1 整词命中优先
+    0 if fina in FINAJHOJ_POR_ORDO else 1, # 2 末段是纯语法词尾
+    meze_funkciaj,                         # 3 中部不出现虚词
+    len(partoj),                           # 4 语素数量少者优先
+    -sum(len(p) ** 2 for p in partoj),     # 5 长匹配优先
+    tuple(partoj),                         # 6 稳定 tie-break
+)
+```
+
+枚举阶段还有三条**位置约束**，用于剔除非法切分：
+
+| 约束 | 作用 | 反例（不约束时） |
+|---|---|---|
+| `NUR_FINAJ = {j, n, as, is, os, us}` 只能在词末 | 动词词尾、复数/宾格 | `montras → mont+ras`；`ananaso → a+n+anas+o` |
+| `GRAMATIKAJ_FINAJHOJ`（`a/e/i/o/u/oj/aj`）后面只能是 `''`/`j`/`n` | 语法元音必须词末 | `avino → a+vin+o` |
+| 枚举倒序遍历前缀 | 先命中长词根 | `horloĝo → hor+lo+ĝ+o` |
+
+实测效果（`README.md` 中 1365 个词形）：
+
+| 指标 | 结果 |
+|---|---|
+| 成功切分 | **95.5%**（1302/1365） |
+| `kontroloto` | 4.5%（62 个，绝大多数是非世界语：`python`、`txt`、`PIV`、`Script`、`output`） |
+
+关键样例（首解）：
+
+| 词 | 输出 |
+|---|---|
+| `horloĝo` | `horloĝ+o \| hor+loĝ+o` |
+| `ekskurso` | `ekskurs+o \| eks+kurs+o` |
+| `ananaso` | `ananas+o` |
+| `heroino` | `heroin+o \| hero+in+o` ✓ 两义并存 |
+| `lernanto` | `lern+ant+o` |
+| `komputilo` | `Komput+il+o \| Kom+put+il+o` |
+| `Maljunulo` | `Mal+jun+ul+o \| Mal+ju+nul+o` |
+| `Alportu` | `Al+port+u \| Alp+ort+u` |
+| `avino` | `av+in+o` |
+| `domojn` | `dom+oj+n` |
+| `kun` | `kun \| ku+n` |
+
+**实施中发现并修正的数据问题（重要）：**
+
+1. **`data-alfa` 不总是裸词根**。PIV 里 `data-alfa="akvo"` 但 `kapvorto` 是 `akv/o`，真词根是 `akv`。若直接用 `data-alfa`，`akvon` 会被切成 `akvo+n`。逐条比对 16649 个词条后，仅 4 条真正受影响（`akvo`、`barmicv`、`kalaazar`、`metakrilataacid`），已移除。
+2. **PIV 的 59 个感叹词混进了词根表**（`pu`、`be`、`fi`、`ha`、`ve`、`oj`…）。它们不是语素，保留会切出 `pu+rig+u`。已全部移除（含各约束表，共 99 行）。
+3. **`sufikso.txt` 缺 7 个后缀**（`ant/at/ont/ot/int/it/in`），这正是 D2。之前靠它们在 `radiko.txt` 里"碰巧能用"，但 2 字母的 `in/at/ot/it` 会被误判为小品词。已补全至 37 个。
+4. **PIV 把月份首字母大写**（`Januar/o`、`Novembr/o`、`Lun/o`），被"专名过滤"误删。世界语实际小写，已补回 9 个（`novembr` 等）。
+5. **`vorteto.txt` 与 `radiko.txt` 重叠**的虚词（`ju`、`kun`、`nul`、`al`、`mi`…）保留双份，但**只在中部位置降权**——词首的 `al`（`alporti`）、`mi`（`mia`）是合法的，不能一禁了之。
+
+**词表最终规模**：`radiko.txt` 13788 / `sufikso.txt` 37 / `prefikso.txt` 39 / `tabelvorto.txt` 45 / `vorteto.txt` 162 / `fundamenta-radiko.txt` 2763。
 
 ---
 
@@ -488,9 +583,9 @@ README「Alia aldona pensadoo」明确提到希望词典能作为外部文件方
 | M5 | P1-3 约束表接入 | 1-2 天 | ⬜ 词表已重建扩充，**代码尚未读取**；与 M9 合并做 |
 | M6 | P1-5 CLI 参数化 | 0.5 天 | ⬜ |
 | M7 | P1-6 连字符/大写 | 1 天 | ⬜ |
-| M8 | 回归测试套件（测试先行补上） | 1-2 天 | ⬜ **应提前**：词表刚大改，正需要回归网兜底 |
-| M9 | P2-1 择优打分 | 3-5 天 | ⬜ **升为最高优先**（见 §1.6） |
-| M10 | P2-2 trie + P2-3 剪枝 | 1-2 天 | ⬜ |
+| M8 | 回归测试套件 | 1-2 天 | ✅ **已完成**（`tests/test_radiko.py`，34 项） |
+| M9 | P2-1 择优打分 | 3-5 天 | ✅ **已完成**（见 §1.7） |
+| M10 | P2-2 trie + P2-3 剪枝 | 1-2 天 | ⚠️ 剪枝已完成；trie 未做（当前性能足够） |
 | M11 | CI + 打包 + 批处理 | 2-3 天 | ⬜ |
 
 **建议顺序：M1 → M2 → M4 → M5 → M8 → M3 → M6 → M7 → M9 → M10 → M11**

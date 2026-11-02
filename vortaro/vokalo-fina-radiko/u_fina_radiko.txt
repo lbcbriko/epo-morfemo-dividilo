@@ -31,7 +31,6 @@ fluktu
 fondu
 foru
 fru
-fu
 genu
 glu
 glugluglu
@@ -40,8 +39,6 @@ grizu
 gru
 guru
 hindu
-hu
-huuu
 individu
 influ
 insinu
@@ -92,8 +89,6 @@ paspartu
 plu
 polu
 prostitu
-pru
-pu
 pudu
 puŝtu
 ragu
@@ -120,14 +115,12 @@ tamandu
 tatu
 telugu
 tiu
-tju
 tohuvabohu
 tolu
 toŭfu
 tru
 tuku
 tulu
-uhu
 unu
 urdu
 vaku

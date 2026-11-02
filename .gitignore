@@ -2,3 +2,12 @@
 .piv-tmp/
 *.old-radiko.txt
 .commitmsg.txt
+.anomalies.json
+.[a-z]*.txt
+
+# 本地 Python 运行时（用于跑测试，不纳入版本控制）
+.pyruntime/
+
+# Python 缓存
+__pycache__/
+*.pyc
