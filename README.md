@@ -1,5 +1,8 @@
 # epo-morfemo-dividilo
 
+## 2 nov. 2026
+La vortaro `radiko.txt` estis refarita el la PIV (Plena Ilustrita Vortaro): de 5523 ĝis 13842 radikoj. Nun la programo povas fendi la kutimajn vortojn (ekz. `dom+o`, `lern+ant+o`, `dom+oj`) anstataŭ resendi `kontroloto`. Detaloj kaj la remainingaj problemoj troviĝas en `PLANO.md`.
+
 ## 1 nov. 2026
 La malnova programo `epo-morfemo-dividilo.py` estis forprenata el ĉi tiu branĉo, ĉar ĝi estas tro malrapida por realan uzon. Ĝi restas en la branĉo `arkivo`, kie oni povas konsulti ĝian logikon paŝe.
 

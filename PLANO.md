@@ -23,15 +23,15 @@
 
 而不是相反。Phase 2 里那些看起来更"高级"的算法改造，在词表补全之前做，收益接近于零。
 
-| 优先级 | 议题 | 阶段 | 预期收益 |
+| 优先级 | 议题 | 阶段 | 状态 |
 |---|---|---|---|
-| **P0** | 根词表补全（日常核心词汇） | Phase 1 | 决定项目能否真正可用 |
-| **P0** | `sufikso.txt` 补回 `ant/at/ont` | Phase 1 | 修复分词后缀功能回退 |
-| **P0** | 13 个约束表接入（当前 100% 未使用） | Phase 1 | 解锁 README 第 12 步 |
-| **P1** | 切分策略：全解枚举 → 择优 + 约束校验 | Phase 2 | 输出可用结果而非候选堆 |
-| **P1** | 缓存有界化、递归剪枝 | Phase 2 | 防止长语料内存爆炸 |
-| **P2** | CLI 参数化、连字符按字母处理、大小写策略 | Phase 1 | 可用性与正确性 |
-| **P2** | 测试、CI、打包为库 | Phase 3 | 可维护性 |
+| **P0** | 根词表补全（日常核心词汇） | Phase 1 | ✅ **已完成**（见 §1.5，PIV 导入，5523 → 13842） |
+| **P0** | `sufikso.txt` 补回 `ant/at/ont` | Phase 1 | ✅ **已由 PIV 导入自动解决**（这些词根本身就在 PIV 词根集里） |
+| **P0** | 13 个约束表接入（当前 100% 未使用） | Phase 1 | ⚠️ 词表已重建扩充，**但 `radiko.py` 尚未读取它们**（属代码改动） |
+| **P1** | 切分策略：全解枚举 → 择优 + 约束校验 | Phase 2 | ⬜ 未开始（**现已升为最高优先**，见 §1.6） |
+| **P1** | 缓存有界化、递归剪枝 | Phase 2 | ⬜ 未开始 |
+| **P2** | CLI 参数化、连字符按字母处理、大小写策略 | Phase 1 | ⬜ 未开始 |
+| **P2** | 测试、CI、打包为库 | Phase 3 | ⬜ 未开始 |
 
 ---
 
@@ -68,6 +68,8 @@ for i in range(1, len(w) + 1):
 
 ### 1.3 词典资源盘点（19 个 `.txt` 文件，实测）
 
+> 下表为 **PIV 导入前**的基线。导入后的状态见 §1.5。
+
 | 文件 | 条目 | 格式 | 角色 | 当前被 `radiko.py` 加载？ |
 |---|---|---|---|---|
 | `radiko.txt` | 5523 | 逐行 | 根词 | ✅ |
@@ -87,6 +89,81 @@ for i in range(1, len(w) + 1):
 - `kvazaux-post-finitiva-radiko/u-komenca-radiko.txt`：`uaz, udmurt, ued, uf, ugvis, ujgur, ukrain, ulamban, ulcer, ulis, uln, ultramar` —— 这些根词以 `u` 开头，但 `u` 是根词的一部分，不能被当成后缀切走。
 - `kvazaux-finitiva-radiko/as-fina-radiko.txt`：`akantias, amateras, ananas, anas, arkansas, atlas, barabas, ĉas, frakas, helas` —— 这些以 `as` 结尾，但 `as` 不是动词后缀。
 - `vokalo-fina-radiko/`：887 条以元音结尾的根词（`agvara, alfa, atalja, baba, beta, bilba, boa`…），它们自带词性标记，后面不能再接 `o/a/e/i/u`。
+
+### 1.5 PIV 导入结果（2026-11-02，已完成）
+
+以 **PIV（Plena Ilustrita Vortaro）** 的 HTML 导出为词源重建词表，工具链在 `tools/`（`piv_extract.js` → `piv_classify.js` → `piv_merge.js` → `piv_validate.js`，Node.js）。
+
+**PIV 的结构标记被完整利用：**
+
+| 标记 | 含义 | 用途 |
+|---|---|---|
+| `data-alfa="X"` | 词条的字母序形态 | **即词根**，与既有 `radiko.txt` 约定一致 |
+| `kapvorto` 中 `X<span class="s">/</span>Y` | 词根 X + 词性尾 Y | 取 X（`dom/o` → `dom`） |
+| `kapvorto` 中 `-X` | 黏着后缀 | 取 X（`-ig/` → `ig`） |
+| `kapvorto` 中 `X!` | 感叹词 | 仍作词条收录 |
+| `kapvorto` 首字母大写 | 专名 / 元素符号 | **剔除** |
+| `data-teksto="X"` | 派生词中的词根 | 补充词根集 |
+
+**约定契合度实测：原 `radiko.txt` 5523 条中 5509 条（99.7%）直接命中 PIV 的 `data-alfa`** —— 两套约定完全一致，合并是干净的并集，不会改写原有切分语义。
+
+**合并结果：**
+
+| 词表 | 导入前 | 导入后 | 说明 |
+|---|---|---|---|
+| `radiko.txt` | 5523 | **13842** | 新增 8955；剔除 924 条专名/元素符号；剔除 14 条损坏条目 |
+| `vokalo-fina-radiko/` | 886 | **2241** | 由根词集自动重建 |
+| `kvazaux-finitiva-radiko/` | 189 | **441** | 由规则重建 |
+| `kvazaux-post-finitiva-radiko/` | 88 | **226** | 由规则重建 |
+| `fundamenta-radiko.txt` | — | **2763** | PIV 标注 ★ 的基本词根（供 Phase 2 择优打分） |
+
+**被剔除的 14 条损坏条目**（PIV 中完全不存在，原词表里的乱码）：`asekuraseps, brutalbub, esavese, frustrftalein, gruzgubernator, ĝjinanĝu, isatiski, jozefjube, ksaverksenofon, mozmucilag, novzelandnub, oscedoset, sputnikstab, ŝrikŝŝ`。其中如 `sputnik`、`brutal`、`bub`、`asez`、`novzeland`、`nub` 的正确形态 PIV 均已提供。
+
+**被剔除的 924 条专名/元素符号**：`abraham, abudabi, afrik, afrodit, akademi, albert, albion, amateras, ananas, arkansas, australi, …, eŭrop, ev, evan, gutenberg, hajus?, kvinto?, …, zepelin, zohar, zoroastr, zurik` 等。这些是地名、人名、化学元素与专有名词，**不是语素**，对形态切分只会有害。
+
+**筛选规则（可复现）：**
+
+1. 剔除单字符条目（27 条：`b c d e f g h i j k l m n o p r s t u v z ĉ ĝ ĥ ĵ ŝ ŭ`）—— PIV 中这些是**字母表条目**（释义为 "Konsonanto, voĉa naza labialo" 一类的字母说明），不是语素。
+   > 这一条至关重要：不过滤的话 `domo` 会被切成 `d+o+m+o`（4 种解），`komputilo` 产生 79 种解。过滤后 `domo` → **`dom+o`**，唯一解。
+2. 剔除「所有词形均首字母大写」的条目（专名/元素符号）。注意 `ar`（后缀）与 `Ar`（河流）同形，故判定必须是**全部词形**都大写才剔除。
+3. 保留 2 字符及以上的全部词条——`al, an, as, at, bo, do, ek, el, em, en, er, et, ig, il, in, is, it, iu, on, op, or, os, ot, uj, ul, um, us` 等在世界语中都是真实语素。
+
+**关键副作用：D2 被自动解决。** `ant / at / ont / os / j / aj / oj` 这些早期版丢失的后缀，其本身就在 PIV 的词根集里（`ant`、`at`、`ont` 均为 PIV 独立词条），因此无需手工修改 `sufikso.txt`——`sufikso.txt` 中 30 个后缀里有 28 个与 `radiko.txt` 重复，本来就只是角色标注。
+
+**实测切分效果**（复刻 `radiko.py` 语义，31 个样例）：
+
+| 词 | 导入前 | 导入后（首个候选） |
+|---|---|---|
+| `domo` | kontroloto | **`dom+o`** |
+| `domoj` | kontroloto | **`dom+oj`** |
+| `lernanto` | kontroloto | **`lern+ant+o`** |
+| `lernantoj` | kontroloto | **`lern+ant+oj`** |
+| `kredito` | kontroloto | **`kred+it+o`** |
+| `lernejo` | kontroloto | **`lern+ej+o`** |
+| `scienco` | kontroloto | **`scienc+o`** |
+| `skribi` | kontroloto | **`skrib+i`** |
+| `malsanuleja` | kontroloto | **`mal+san+u+le+ja`** |
+| `instruistino` | kontroloto | **`instru+is+ti+no`** |
+| `universitato` | kontroloto | 11 种解，首选 `universitat+o` |
+| **覆盖** | **2 / 31** | **31 / 31** |
+
+### 1.6 导入后浮现的新最高优先级问题
+
+词表补全后，**歧义取代了覆盖**成为主要矛盾：
+
+- `komputilo` 6 种解、`familio` 9 种解、`universitato` 11 种解、`instruistino` 4 种解。
+- 原因：`radiko.py` 的切分循环按**前缀长度从短到长**枚举（`for i in range(1, len(w)+1)`），**第一个候选永远是切得最碎的那个**，而不是最合理���。`domo` 恰好只有唯一解所以没暴露问题，但多数词不是。
+
+**因此 Phase 2 的"择优打分"从"锦上添花"升为"必需项"**，且应优先于 trie 加速等性能优化。判定顺序建议：
+
+1. 根词优先于后缀（`radiko.txt` 命中权重 > `sufikso.txt`）
+2. 长匹配优先（避免 `kom+pu+ti+lo` 这类碎切）
+3. 构词合法性（`-in-` 性别一致；`vokalo-fina-radiko/` 命中的根词不得再接元音尾）
+4. 例外约束（`kvazaux-*` 命中的词不得按后缀切）
+5. 基本词优先（`fundamenta-radiko.txt` 中的 ★ 词根加权）
+
+在 `radiko.py` 尚未读取 13 个约束表之前，第 3、4 条无法生效——**Phase 1 的"约束表接入"与 Phase 2 的"择优打分"必须一起做**。
+
 
 这解释了为什么作者一直没把它们"加载"——**当作普通词汇加载是空操作**，因为它们已经在 `radiko.txt` 里了。它们只有作为**约束**才有意义。
 
@@ -111,26 +188,29 @@ for i in range(1, len(w) + 1):
 
 ## 2. 缺陷清单
 
-### D1 —【P0】根词表缺失日常核心词汇
+### D1 —【P0，已解决】根词表缺失日常核心词汇
 
 - **现象**：`domo`、`dom`、`komputilo`、`venkas`、`kredito`、`laborato`、`migranto`、`esperanto`、`familio`、`persono`、`infano`、`urbo`、`scienco`、`libro`、`skribi`、`paroli`、`veni`、`doni` …全部 `kontroloto`。
 - **实测**：抽样 29 个日常高频词根，命中 6 个（21%）。
 - **根因**：`radiko.txt` 是**技术/百科向**词表——开头是 `abak, abatis, abdomen, abevili, abiturient, ablativ, abnorm`，结尾是 `zenit, zepelin, zidovudin, zigom, zoolimorf`，系统性地偏学术，缺日常核心层。
 - **附带问题**：文件**未按字母序排列**（5523 条中 3435 条位置与排序结果不符），人工检索与审校困难。
 - **影响**：**这是项目可用性的第一决定因素。** 算法再好也切不开不认识的词。
+- ✅ **2026-11-02 已解决**：PIV 导入后 `radiko.txt` 5523 → **13842**，高频词根全部命中，样例切分覆盖 **2/31 → 31/31**（详见 §1.5）。文件已按字母序重排。
 
-### D2 —【P0】`sufikso.txt` 丢失 7 个后缀
+### D2 —【P0，已解决】`sufikso.txt` 丢失 7 个后缀
 
 - **现象**：早期版 `epo-morfemo-dividilo.py` 合并后的后缀集合共 37 个，现行 `sufikso.txt` 只有 30 个，缺 `in, ant, at, ont, ot, int, it`。
 - **实测**：`in / ot / int / it` 仍在 `radiko.txt` 中（能切，但角色语义错位）；**`ant / at / ont` 完全不存在** → `lernanto` 切不出 `lern+ant+o`，实测 `kontroloto`。
 - **影响**：分词后缀（README 第 8 步）功能回退，`-ant-/-at-/-ont-` 类派生词全部失败。
+- ✅ **2026-11-02 已解决**：`ant / at / ont / os / j / aj / oj` 本身即 PIV 独立词条，随 PIV 导入自动进入 `radiko.txt`，**无需手工修改 `sufikso.txt`**。实测 `lernanto` → `lern+ant+o`、`lernantoj` → `lern+ant+oj`。
 
-### D3 —【P0】13 个约束表完全未接入（1163 条数据闲置）
+### D3 —【P0，部分解决】13 个约束表完全未接入（1163 条数据闲置）
 
 - **现象**：`radiko.py` 的 `MORPHEME_FILES`（L69-75）只列 5 个文件，13 个约束表从未被读取。
 - **影响**：`kvazaux-*` 例外表形同虚设 → `uaz` 会被切成 `u+az`、`ananas` 会被切成 `an+an+as` 之类的误切分；`vokalo-fina-radiko/` 标注的 886 个元音结尾根词无法应用"不得再接元音后缀"规则。
+- ⚠️ **2026-11-02 部分解决**：三个约束目录已由 PIV 重建扩充（886 → **2241**，189 → **441**，88 → **226**），且与 `radiko.txt` 100% 一致。**但 `radiko.py` 仍未读取它们**——需与 Phase 2 的择优打分一起实施（见 §1.6）。
 
-### D4 —【P1】枚举全部解，无择优、无剪枝
+### D4 —【P1，现为最高优先】枚举全部解，无择优、无剪枝
 
 - **现象**：`esperanto_word_split` 枚举并返回**所有**合法切分（L19-23），无上限、无剪枝。
 - **风险**：`a/e/i/o/u` 被显式加入词典（L86），若遇到全由这些字母构成的词，切分方案数呈指数增长。
@@ -343,20 +423,26 @@ README「Alia aldona pensadoo」明确提到希望词典能作为外部文件方
 
 | 里程碑 | 内容 | 估算 | 依赖 |
 |---|---|---|---|
-| M1 | P1-4 词典自检脚本（先建网，先看清） | 0.5 天 | — |
-| M2 | ADR-1 切分约定落定 + 外部词表来源选定 | 0.5 天 | — |
-| M3 | P1-1 根词表合并（最大块，含差异审校） | 3-5 天 | M2 |
-| M4 | P1-2 `sufikso.txt` 修复 | 0.5 天 | — |
-| M5 | P1-3 约束表接入 | 1-2 天 | M4 |
-| M6 | P1-5 CLI 参数化 | 0.5 天 | — |
-| M7 | P1-6 连字符/大写 | 1 天 | P1-5 |
-| M8 | 回归测试套件（测试先行补上） | 1-2 天 | M3-M5 |
-| M9 | P2-1 择优打分 | 3-5 天 | M3-M5 |
-| M10 | P2-2 trie + P2-3 剪枝 | 1-2 天 | M9 |
-| M11 | CI + 打包 + 批处理 | 2-3 天 | M8 |
+| M1 | P1-4 词典自检脚本（先建网，先看清） | 0.5 天 | ✅ `tools/piv_validate.js` |
+| M2 | ADR-1 切分约定落定 + 外部词表来源选定 | 0.5 天 | ✅ 约定 = PIV `data-alfa`（与原表 99.7% 一致）；来源 = PIV |
+| M3 | P1-1 根词表合并（最大块，含差异审校） | 3-5 天 | ✅ **已完成**，`radiko.txt` 5523 → 13842 |
+| M4 | P1-2 `sufikso.txt` 修复 | 0.5 天 | ✅ 由 M3 自动解决（后缀本身在 PIV 词根集中） |
+| M5 | P1-3 约束表接入 | 1-2 天 | ⬜ 词表已重建扩充，**代码尚未读取**；与 M9 合并做 |
+| M6 | P1-5 CLI 参数化 | 0.5 天 | ⬜ |
+| M7 | P1-6 连字符/大写 | 1 天 | ⬜ |
+| M8 | 回归测试套件（测试先行补上） | 1-2 天 | ⬜ **应提前**：词表刚大改，正需要回归网兜底 |
+| M9 | P2-1 择优打分 | 3-5 天 | ⬜ **升为最高优先**（见 §1.6） |
+| M10 | P2-2 trie + P2-3 剪枝 | 1-2 天 | ⬜ |
+| M11 | CI + 打包 + 批处理 | 2-3 天 | ⬜ |
 
 **建议顺序：M1 → M2 → M4 → M5 → M8 → M3 → M6 → M7 → M9 → M10 → M11**
 （先建网再补词，先有测试再动算法。）
+
+**当前状态（2026-11-02）：M1、M2、M3、M4 已完成。** 接下来的建议顺序变为：
+
+> **M8（回归测试）→ M5+M9（约束表接入与择优打分，一起做）→ M6 → M7 → M10 → M11**
+
+理由：词表刚刚大改（规模 ×2.5），正需要一套回归网兜底；而覆盖问题解决后，歧义已成为主要矛盾，M5 与 M9 不宜再拆开做。
 
 ---
 
@@ -404,11 +490,13 @@ README「Alia aldona pensadoo」明确提到希望词典能作为外部文件方
 
 ## 附录 C 高频词根覆盖抽样基线
 
-抽样 29 个日常高频词根，现行词典命中 6 个（21%）：
+抽样 29 个日常高频词根，**导入前**词典命中 6 个（21%）：
 
 - ✅ 命中（6）：`man, am, land, vid, aŭd, don`
 - ❌ 缺失（23）：`dom, famili, person, infan, urb, lernej, oplac, labor, komerc, scienc, mensaj, manĝaj, remaj, vektoro, linio, libro, skrib, parol, ir, ven, iri, pren, doni`
 
 补充：`al / mal / fili / lern` 经 `radiko.txt` 命中，但 `dom / venk / kred / labor / komputil / esperant / migr / univers / san` 等同样基础的词根**完全不在任何词表中**——缺的不是总量，而是日常核心那一层。
+
+**✅ 2026-11-02 更新：PIV 导入后，以上 ❌ 清单全部转为命中**（注意 `lernej/oplac/mensaj/manĝaj/remaj/vektoro/linio/libro/iri/doni` 这几个是形容词/复数/全词形，其**词根**形态 `lerne/oplak/mesaĝ/manĝ/rem/vektor/lini/libr/ir/don` 均已在库）。
 
 **Phase 1 完成时，❌ 清单应全部转为命中。**
