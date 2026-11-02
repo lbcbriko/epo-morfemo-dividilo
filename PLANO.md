@@ -257,6 +257,64 @@ for i in range(1, len(w) + 1):
 - **具体**：`naci` 在 `radiko.txt` 中但未被 `vokalo-fina-radiko/i_fina_radiko.txt` 标注。
 - **来源**：正是 2024-04-22 提交 `56511e0` 把错误的 `nacionalism` 改为 `naci` 时，只改了主词表、没同步标注表引入的。
 - **影响**：说明**标注表与主词表之间缺少一致性校验机制**，人工维护必然继续漂移。
+- ✅ **2026-11-02 已解决**：PIV 导入时三个约束目录全部由根词集整体重建，`naci` 已自动补入 `i_fina_radiko.txt`，当前 2241 / 2241 完全一致。
+
+### D14 —【P0】"最小可识别词素"划分会切碎词汇化复合词
+
+这是**覆盖问题解决后暴露的核心正确性问题**。
+
+- **现象**：`horloĝo` 会被切成 `hor+loĝ+o`（应为 `horloĝ+o`）；`ekskurso` 会被切成 `eks+kurs+o`（应为 `ekskurs+o`）；`ananaso` 会被切成 `an+an+as+o`。
+- **实测规模**：`radiko.txt` 13842 条中，**7270 条（52.5%）可以被再切成 2 个以上词典中已有的成分**。若采用"最小可识别词素"策略，一半以上的词根会被切碎。
+- **根因**：世界语的形态切分有两个相互冲突的目标——"切到最小语素"与"尊重词汇化"。`horloĝ`（钟表）历史上来自 `hor`（时）+ `loĝ`（居住），但它早已是一个不可再分的词汇单位；PIV 把它列为独立词条，而不是 `hor` 的派生词。
+- **真正的判据**：**PIV 的 `art`（独立词条）与 `div class="derivajho"`（派生词）之分，正是"词汇化 vs 规则派生"的分界线。** 实测证据：
+
+| 词形 | PIV 是否独立词条 | 正确切分 | 理由 |
+|---|---|---|---|
+| `horloĝ` | ✅ `horloĝ/o` | `horloĝ+o` | 词汇化，不能再切 |
+| `ekskurs` | ✅ `ekskurs/o` | `ekskurs+o` | 词汇化（虽然 `eks`、`kurs` 也都是词条） |
+| `ananas` | ✅ `ananas/o` | `ananas+o` | 词汇化（`an` 不是词条） |
+| `acerb` | ✅ `acerb/a` | `acerb+a` | 词汇化 |
+| `universitat` | ✅ `universitat/o` | `universitat+o` | 词汇化 |
+| `esperant` | ✅ `Esperant/o` | `esperant+o` | 专名，README 要求忽略处理 |
+| `lernant` | ❌ 无 | `lern+ant+o` | 规则派生，`lern` 的 derivajho |
+| `komputil` | ❌ 无 | `komput+il+o` | 规则派生 |
+| `instruistin` | ❌ 无 | `instru+ist+in+o` | 规则派生 |
+
+- **对策一（解决绝大多数情况）：最长匹配优先。** 因为 `radiko.txt` 现在**就是 PIV 词条集**，"优先匹配最长的词根"在语义上等于"优先尊重词汇化"。实测（`tools/strategy_compare.js`）：
+  - `horloĝo` → `horloĝ+o` ✅
+  - `ekskurso` → `ekskurs+o` ✅
+  - `ananaso` → `ananas+o` ✅
+  - `lernanto` → `lern+ant+o` ✅（`lernant` 不是词条，长匹配自然落到 `lern`）
+  - `komputilo` → `komput+il+o` ✅
+  - `instruistino` → `instru+ist+in+o` ✅
+  - `malsanuleja` → `mal+san+ul+ej+a` ✅
+  - 也就是说，**把 `range(1, len+1)` 改成倒序几乎是免费的胜利**。
+
+  ```python
+  # 现状（短优先，倾向切碎）
+  for i in range(1, len(w) + 1):
+      if w[:i].lower() in dictionary:
+
+  # 建议（长优先，尊重词汇化）
+  for i in range(len(w), 0, -1):
+      if w[:i].lower() in dictionary:
+  ```
+  更稳妥的做法是保留"枚举全解 + 打分排序"，把「长匹配」作为第一条打分规则（而不是改成贪心，以免丢失多解能力）：分数 = Σ (成分长度²) 之类，天然偏好少切、长切。
+
+- **对策二（真正不可消解的部分）：同形异义必须多解输出。** `heroino` 是典型：
+  - `heroin/o` 是 PIV 独立词条（海洛因）
+  - `hero/o` 也是 PIV 独立词条（英雄），加 `-in-`（女性）得"女英雄"
+  - **两种切分在词法上都完全合法，任何算法都无法单靠字符串判定。** 依据必须来自上下文语义。
+  - 同类：`kredito` = `kredit+o`（信用）或 `kred+it+o`（被相信的）。
+  - 因此输出格式必须能承载多解，例如 `heroino{{heroin+o @药物 | hero+in+o @人}}`，并附置信度或义项标签，交由下游（人工校对或语义消歧）选择。**不能假装只有一个正确答案。**
+
+- **对策三（已评估，暂不采用）：自动生成"词汇化复合词"白名单。** 曾尝试用「整词是词根 ∧ 可切成 ≥2 个长度 ≥3 的语素」自动导出，得到 2484 条候选（17.9%）。**但实测噪声极大**：`akademi = akad+emi`、`almenaŭ = alme+naŭ`、`aksiom = aks+iom`、`alfabet = alfa+bet` 全是误判（纯字符串巧合，非真实构词）。
+  - 结论：**字符串层面的"可分解"不等于"复合词"**，无法自动区分 `horloĝ`（真复合）与 `akademi`（借词巧合）。
+  - 因此不作为权威白名单发布。若将来需要"展示词源切分"这类功能，应作为**人工审校的候选清单**另行维护，且不影响主切分逻辑——主逻辑靠对策一（长匹配）即可正确处理。
+
+- **对策四：约束表接入后，可进一步降噪。** `vokalo-fina-radiko/` 与 `kvazaux-*` 能排除一部分非法切分（如元音结尾根词后不得再接元音）。
+
+- **影响**：这是 Phase 2 "择优打分"的核心内容，不是可选项。若不处理，词典规模翻倍反而会**让切分质量下降**——因为成分越多，错误组合越多（实测 `komputilo` 的候选解从 6 种涨到更多碎切）。
 
 ---
 
